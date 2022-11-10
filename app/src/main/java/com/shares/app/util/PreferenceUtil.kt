@@ -14,10 +14,9 @@ class PreferenceUtil(val context: Context) {
         private const val TOKEN_KEY = "token"
         private const val UID_KEY = "uid"
         private const val USERDATA_KEY = "userData"
-        private const val FLOW_KEY = "flow"
-        private const val URL_KEY = "url"
-        private const val CANCEL_KEY = "cancel"
-        private const val EDITEXPAN_KEY = "editExpan"
+        private const val CHECK1 = "check1"
+        private const val CHECK2 = "check2"
+        private const val CHECK3 = "check3"
     }
 
     private val mSharedPreference =
@@ -28,9 +27,7 @@ class PreferenceUtil(val context: Context) {
         return mSharedPreference.getString(TOKEN_KEY,"").orEmpty()
     }
 
-    fun getUid(): Int {
-        return mSharedPreference.getInt(UID_KEY,0)
-    }
+
 
     fun getUserData(): String? {
         return mSharedPreference.getString(USERDATA_KEY,"")
@@ -40,9 +37,9 @@ class PreferenceUtil(val context: Context) {
         mSharedPreference.edit {
             putString(TOKEN_KEY, "")
             putInt(UID_KEY, 0)
-            putBoolean(EDITEXPAN_KEY, false)
-            putBoolean(EDITEXPAN_KEY,false)
-            putBoolean(FLOW_KEY,false)
+            putBoolean(CHECK1,false)
+            putBoolean(CHECK2,false)
+            putBoolean(CHECK3,false)
         }
     }
 
@@ -58,13 +55,30 @@ class PreferenceUtil(val context: Context) {
         }
     }
 
-    fun getFlow():Boolean{
-       return mSharedPreference.getBoolean(FLOW_KEY,false)
+    fun getCheck1():Boolean{
+       return mSharedPreference.getBoolean(CHECK1,false)
+    }
+    fun getCheck2():Boolean{
+        return mSharedPreference.getBoolean(CHECK2,false)
     }
 
-    fun setFlow(show:Boolean){
+    fun getCheck3():Boolean{
+        return mSharedPreference.getBoolean(CHECK3,false)
+    }
+
+    fun setCheck1(show:Boolean){
         mSharedPreference.edit {
-            putBoolean(FLOW_KEY,show)
+            putBoolean(CHECK1,show)
+        }
+    }
+    fun setCheck2(show:Boolean){
+        mSharedPreference.edit {
+            putBoolean(CHECK2,show)
+        }
+    }
+    fun setCheck3(show:Boolean){
+        mSharedPreference.edit {
+            putBoolean(CHECK3,show)
         }
     }
     fun isLogin(): Boolean {

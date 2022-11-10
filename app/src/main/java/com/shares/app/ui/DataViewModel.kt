@@ -41,23 +41,36 @@ class DataViewModel(
     val sFour = MutableLiveData<String>()
     val sFive = MutableLiveData<String>()
     val format = MutableLiveData<String>()
+    val buyNumber = MutableLiveData<String>()
+    val buy = MutableLiveData<String>()
+    val level = MutableLiveData<String>()
+    val levelInt = MutableLiveData<Int>()
+    val buyNumberResult = MutableLiveData<String>()
+    val buyResult = MutableLiveData<String>()
     val selectIndex = MutableLiveData<Int>()
+    val check1 = MutableLiveData<Boolean>()
+    val check2 = MutableLiveData<Boolean>()
+    val check3 = MutableLiveData<Boolean>()
     private val mEvent = SingleLiveEvent<ViewModelEvent>()
     val event: LiveData<ViewModelEvent> = mEvent
     init {
         haveVip.value=0
-        val temp=mPreferenceUtil.getFlow()
-        if(temp){
-            selectIndex.value=0
-        }else{
-            selectIndex.value=1
-        }
+        check1.value=false
+        check2.value=false
+        check3.value=false
+        check1.value=mPreferenceUtil.getCheck1()
+        check2.value=mPreferenceUtil.getCheck2()
+        check3.value=mPreferenceUtil.getCheck3()
         day.value=""
         numberTime.value=""
         yesterday.value=""
         today.value=""
         time.value=""
         now.value=""
+        buyNumber.value=""
+        buy.value=""
+        level.value="LV1"
+        levelInt.value=0
         isPlus.value=true
     }
     fun getUserInfo() {
@@ -124,13 +137,50 @@ class DataViewModel(
         mBaseEvent.postValue(BaseViewModelEvent.NavigateEvent(R.id.navigation_pay, bundleOf()))
     }
 
-    fun choose(value:Int){
-        if(value==0){
-            mPreferenceUtil.setFlow(true)
-        }else{
-            mPreferenceUtil.setFlow(false)
+    fun goCal(){
+        if(buyNumber.value.isNullOrEmpty()||buy.value.isNullOrEmpty()){
+            return
         }
-        selectIndex.value=value
+        val temp=buyNumber.value!!.toInt()
+        val temp2=buy.value!!.toInt()
+        var temp1=0.5
+        when(levelInt.value){
+            0->{
+                temp1=0.5
+            }
+            1->{
+                temp1=0.15
+            }
+            2->{
+                temp1=0.05
+            }
+            3->{
+                temp1=0.03
+            }
+            4->{
+                temp1=0.02
+            }
+        }
+        buyNumberResult.value=(temp/(1+temp1)).toInt().toString()
+        buyResult.value=((1+temp1)*temp2/temp).toInt().toString()
+    }
+
+
+    fun chooseCheck(value:Int){
+        when(value){
+            1->{
+                check1.value=!check1.value!!
+                mPreferenceUtil.setCheck1(check1.value!!)
+            }
+            2->{
+                check2.value=!check2.value!!
+                mPreferenceUtil.setCheck2(check2.value!!)
+            }
+            3->{
+                check3.value=!check3.value!!
+                mPreferenceUtil.setCheck3(check3.value!!)
+            }
+        }
     }
 
     sealed class ViewModelEvent {

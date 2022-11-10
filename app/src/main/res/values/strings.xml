@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">share</string>
+    <string name="app_name">极豹数据</string>
 
     <string name="title_login">login</string>
     <string name="title_home">home</string>
@@ -45,16 +45,24 @@
     <string name="data_tip4">昨收</string>
     <string name="data_tip5">最高</string>
     <string name="data_tip6">最低</string>
-    <string name="data_tip7">5001以上</string>
-    <string name="data_tip8">1001-5000</string>
-    <string name="data_tip9">501-1000</string>
-    <string name="data_tip10">101-500</string>
-    <string name="data_tip11">51-100</string>
-    <string name="data_tip12">1-50</string>
-    <string name="data_tip13">卖单</string>
-    <string name="data_tip14">买单</string>
-    <string name="data_tip15">%s&#160;&#160;%s单</string>
+    <string name="data_tip7">买入数量</string>
+    <string name="data_tip8">股</string>
+    <string name="data_tip9">请输入</string>
+    <string name="data_tip10">买入总金额</string>
+    <string name="data_tip11">元</string>
+    <string name="data_tip12">账号等级</string>
+    <string name="data_tip13">期权可卖数量</string>
+    <string name="data_tip14">实际期权成本</string>
+    <string name="data_tip15">元/股</string>
+    <string name="data_tip16">是否开启通知栏</string>
+    <string name="data_tip17">是否开启开盘提醒</string>
+    <string name="data_tip18">是否开启收盘提醒</string>
+    <string name="data_tip19">是</string>
+    <string name="data_tip20">否</string>
+
     <string name="data_btn">充值会员</string>
+    <string name="data_btn1">开始计算</string>
+    <string name="data_cal_tip">成本计算器</string>
 
     <string name="data_flow">是否开启浮窗</string>
     <string name="data_enter">是</string>

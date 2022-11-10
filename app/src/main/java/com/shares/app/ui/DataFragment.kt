@@ -27,7 +27,6 @@ class DataFragment : BaseFragment() {
         mBinding.lifecycleOwner = this
         mBinding.vm = mVm
         StatusBarUtil.setTranslucentForImageViewInFragment(requireActivity(),0,mBinding.top)
-        mVm.format.value=requireContext().resources.getString(R.string.data_tip15)
         val temp=ViewModelProviders.of(requireActivity())[LineViewModel::class.java]
         temp.loadNetWork(networkUtil)
         temp.loadDay()
