@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+   >
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.shares.app.ui.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.shares.app.ui.RegisterFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/navigation_data"
+        android:name="com.shares.app.ui.DataFragment"
+        android:label="@string/title_data"
+        tools:layout="@layout/fragment_data" />
+
+    <fragment
+        android:id="@+id/navigation_my"
+        android:name="com.shares.app.ui.MyFragment"
+        android:label="@string/title_my"
+        tools:layout="@layout/fragment_my" />
+
+    <fragment
+        android:id="@+id/navigation_pay"
+        android:name="com.shares.app.ui.PayFragment"
+        android:label="@string/title_pay"
+        tools:layout="@layout/fragment_pay" />
+
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.shares.app.ui.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+
+</navigation>
+

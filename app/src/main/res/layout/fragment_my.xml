@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.shares.app.ui.MyViewModel" />
+
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/my_bg"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <FrameLayout
+                    android:id="@+id/top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:background="@drawable/fwhite_15"
+                        android:orientation="vertical"
+                        android:paddingStart="15dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/my_item_bg"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="17dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="17dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/my_tip}"
+                                android:textColor="@color/f333333"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="51dp"
+                                android:text="@{vm.name}"
+                                android:textColor="@color/f666666"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/my_item_bg"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="17dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="17dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/my_tip1}"
+                                android:textColor="@color/f333333"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@{vm.endTime}"
+                                android:textColor="@color/f666666"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/my_item_bg"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="17dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="17dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/my_tip2}"
+                                android:textColor="@color/f333333"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@{vm.recommend}"
+                                android:textColor="@color/f666666"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/my_item_bg"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="17dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="17dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/my_tip3}"
+                                android:textColor="@color/f333333"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@{vm.code}"
+                                android:textColor="@color/f666666"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:background="@drawable/my_top_icon" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/my_btn_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->vm.goPay()}"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:text="@string/my_btn"
+                    android:textColor="@color/fa65c3d"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/my_btn_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->vm.logout()}"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:text="@string/my_logout"
+                    android:textColor="@color/fa65c3d"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+</layout>

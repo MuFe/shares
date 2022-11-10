@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">share</string>
+
+    <string name="title_login">login</string>
+    <string name="title_home">home</string>
+    <string name="title_register">register</string>
+    <string name="title_data">data</string>
+    <string name="title_my">my</string>
+    <string name="title_pay">pay</string>
+
+
+    <string name="bottom_home">基础数据</string>
+    <string name="bottom_data">核心数据</string>
+    <string name="bottom_my">个人中心</string>
+
+
+    <string name="login_empty_phone">账号不能为空</string>
+    <string name="login_empty_pass">密码不能为空</string>
+    <string name="login_title">密码登录</string>
+    <string name="login_phone_hint">账号:</string>
+    <string name="login_password_hint">密码:</string>
+    <string name="login_btn">登录</string>
+    <string name="login_register">注册</string>
+
+    <string name="register_title">注册</string>
+    <string name="register_toast">注册成功</string>
+    <string name="register_phone_hint">账号</string>
+    <string name="register_password_hint">密码</string>
+    <string name="register_btn">确认注册</string>
+    <string name="register_invite">邀请人(可空):</string>
+    <string name="register_tip">第一次登录将与手机进行绑定邀请码为对方用户名，可空</string>
+
+    <string name="my_tip">账号：</string>
+    <string name="my_tip1">会员到期日：</string>
+    <string name="my_tip2">邀请我的人：</string>
+    <string name="my_tip3">我的邀请码：</string>
+
+    <string name="my_logout">退出登录</string>
+    <string name="my_btn">续费会员</string>
+
+    <string name="data_tip">北京时间</string>
+    <string name="data_tip1">人民币</string>
+    <string name="data_tip2">市场挂单数量</string>
+    <string name="data_tip3">今开</string>
+    <string name="data_tip4">昨收</string>
+    <string name="data_tip5">最高</string>
+    <string name="data_tip6">最低</string>
+    <string name="data_tip7">5001以上</string>
+    <string name="data_tip8">1001-5000</string>
+    <string name="data_tip9">501-1000</string>
+    <string name="data_tip10">101-500</string>
+    <string name="data_tip11">51-100</string>
+    <string name="data_tip12">1-50</string>
+    <string name="data_tip13">卖单</string>
+    <string name="data_tip14">买单</string>
+    <string name="data_tip15">%s&#160;&#160;%s单</string>
+    <string name="data_btn">充值会员</string>
+
+    <string name="data_flow">是否开启浮窗</string>
+    <string name="data_enter">是</string>
+    <string name="data_no">否</string>
+
+
+    <string name="home_tip1">万股期权分佣</string>
+    <string name="home_tip2">阅读值分佣</string>
+    <string name="home_tip3">96赞友卡分佣</string>
+    <string name="home_tip4">走势图</string>
+    <string name="home_today_lable">Date</string>
+    <string name="home_format1">%s/%s</string>
+
+    <string name="pay_title">选择商品</string>
+    <string name="pay_tip">半年卡</string>
+    <string name="pay_tip1">年卡</string>
+    <string name="pay_tip2">￥600</string>
+    <string name="pay_tip3">￥1200</string>
+    <string name="pay_tip4">首充</string>
+    <string name="pay_tip5">折&#160;&#160;</string>
+    <string name="pay_tip6">联系方式：</string>
+    <string name="pay_tip7">【必填】推荐填写QQ号或手机号</string>
+    <string name="pay_tip8">支付方式：</string>
+    <string name="pay_tip9">支付宝</string>
+    <string name="pay_tip10">微信</string>
+    <string name="pay_tip11">请输入您的联系方式</string>
+    <string name="pay_btn">支付</string>
+    <string name="pay_error">支付失败</string>
+    <string name="pay_contact_empty">联系方式不能为空</string>
+
+
+</resources>

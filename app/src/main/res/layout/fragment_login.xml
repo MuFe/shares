@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.shares.app.ui.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bottom_check">
+
+
+        <View
+            android:id="@+id/login_bg"
+            android:layout_width="0dp"
+            android:layout_height="352dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginEnd="23dp"
+            android:background="@drawable/fwhite_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/login_title_lay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintEnd_toEndOf="@id/login_bg"
+            app:layout_constraintStart_toStartOf="@id/login_bg"
+            app:layout_constraintTop_toTopOf="@id/login_bg">
+
+            <TextView
+                android:id="@+id/login_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/login_title"
+                android:textColor="@color/f4b80e7"
+                android:textSize="22dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@id/login_type_title"
+                android:layout_alignStart="@id/login_type_title"
+                android:layout_alignEnd="@id/login_type_title"
+                android:layout_marginStart="-20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="-20dp"
+                android:background="@color/f4b80e7" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/login_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/login_item_bg"
+            android:drawableStart="@drawable/login_phone_icon"
+            android:drawablePadding="10dp"
+            android:hint="@string/login_phone_hint"
+            android:maxLength="13"
+            android:padding="10dp"
+            android:text="@={vm.phone}"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/login_bg"
+            app:layout_constraintStart_toStartOf="@id/login_bg"
+            app:layout_constraintTop_toBottomOf="@id/login_title_lay" />
+
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_item_bg"
+            android:drawableStart="@drawable/login_password_icon"
+            android:drawablePadding="10dp"
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@={vm.pass}"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/login_phone"
+            app:layout_constraintStart_toStartOf="@id/login_phone"
+            app:layout_constraintTop_toBottomOf="@id/login_phone" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:backgroundTint="@color/f4b80e7"
+            android:onClick="@{()->vm.login()}"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/login_btn"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/login_bg"
+            app:layout_constraintEnd_toEndOf="@id/login_phone"
+            app:layout_constraintStart_toStartOf="@id/login_phone" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_btn">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->vm.goRegister()}"
+                android:text="@string/login_register"
+                android:textColor="@color/f4b80e7"
+                android:textSize="16dp" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
