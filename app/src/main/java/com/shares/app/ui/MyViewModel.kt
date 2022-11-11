@@ -39,7 +39,7 @@ class MyViewModel(
             networkUtil?.getVip {
                 val temp=it.vipEndTime
                 if(!temp.isNullOrEmpty()){
-                    endTime.value =(temp.toDateStr("yyyy-MM-dd'T'HH:mm:ss.SSS")/1000).toDateStr("yyyy-MM-dd")
+                    endTime.value =(temp.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("yyyy-MM-dd")
                 }
                 code.value = mPreferenceUtil.getUserData()
                 recommend.value = it.recommendId.orEmpty()

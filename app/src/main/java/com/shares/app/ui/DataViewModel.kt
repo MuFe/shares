@@ -95,8 +95,8 @@ class DataViewModel(
     fun getData(){
         loadData() { it, result ->
             networkUtil?.getPrice {
-                day.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss.SSS")/1000).toDateStr("yyyy-MM-dd")
-                time.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss.SSS")/1000).toDateStr("HH:mm")
+                day.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("yyyy-MM-dd")
+                time.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("HH:mm")
                 now.value=it.current.price.toString()
                 today.value=it.current.maxPrice.toString()
                 yesterday.value=it.yesterday.price.toString()
