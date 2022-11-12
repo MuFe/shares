@@ -59,6 +59,10 @@
     <string name="data_tip18">是否开启收盘提醒</string>
     <string name="data_tip19">是</string>
     <string name="data_tip20">否</string>
+    <string name="data_tip21">实时</string>
+    <string name="data_tip22">涨跌</string>
+    <string name="data_notify1">嗷呜～小豹子提醒您，今日数据分析要开始喽！</string>
+    <string name="data_notify2">嗷呜～小豹子提醒您，今日数据分析要结束啦！</string>
 
     <string name="data_btn">充值会员</string>
     <string name="data_btn1">开始计算</string>

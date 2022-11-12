@@ -30,17 +30,7 @@ class DataViewModel(
     val now = MutableLiveData<String>()
     val change = MutableLiveData<String>()
     val isPlus = MutableLiveData<Boolean>()
-    val bOne = MutableLiveData<String>()
-    val bTwo = MutableLiveData<String>()
-    val bThree = MutableLiveData<String>()
-    val bFour = MutableLiveData<String>()
-    val bFive = MutableLiveData<String>()
-    val sOne = MutableLiveData<String>()
-    val sTwo = MutableLiveData<String>()
-    val sThree = MutableLiveData<String>()
-    val sFour = MutableLiveData<String>()
-    val sFive = MutableLiveData<String>()
-    val format = MutableLiveData<String>()
+    val changeCheck= MutableLiveData<Boolean>()
     val buyNumber = MutableLiveData<String>()
     val buy = MutableLiveData<String>()
     val level = MutableLiveData<String>()
@@ -58,6 +48,7 @@ class DataViewModel(
         check1.value=false
         check2.value=false
         check3.value=false
+        changeCheck.value=false
         check1.value=mPreferenceUtil.getCheck1()
         check2.value=mPreferenceUtil.getCheck2()
         check3.value=mPreferenceUtil.getCheck3()
@@ -167,6 +158,7 @@ class DataViewModel(
 
 
     fun chooseCheck(value:Int){
+        changeCheck.value=true
         when(value){
             1->{
                 check1.value=!check1.value!!
