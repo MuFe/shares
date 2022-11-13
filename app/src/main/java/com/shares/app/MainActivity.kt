@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity(), MainHost {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
         if (mPreferenceUtil.isLogin()) {
-            navGraph.startDestination = R.id.navigation_home
-            navController.setGraph(navGraph)
+            navGraph.setStartDestination(R.id.navigation_home)
+            navController.graph = navGraph
         } else {
-            navGraph.startDestination = R.id.navigation_login
+            navGraph.setStartDestination(R.id.navigation_login)
             navController.graph = navGraph
         }
         StatusBarUtil.setTranslucentForImageViewInFragment(this,0,null)
@@ -94,13 +94,13 @@ class MainActivity : AppCompatActivity(), MainHost {
 
     override fun resetNavToHome() {
         val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        navGraph.startDestination = R.id.navigation_home
+        navGraph.setStartDestination( R.id.navigation_home)
         navController.graph = navGraph
 
     }
     override fun resetNavToLogin() {
         val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        navGraph.startDestination = R.id.navigation_login
+        navGraph.setStartDestination( R.id.navigation_login)
         navController.graph = navGraph
     }
 }

@@ -29,6 +29,9 @@ open class BaseFragment : Fragment(), BaseOwner,FragmentHost {
                         Status.ERROR->{
                            requireContext().toast(event.resource.message.orEmpty())
                         }
+                        else->{
+
+                        }
                     }
                 }
                 is BaseModel.BaseViewModelEvent.ToastIntEvent->{
@@ -46,6 +49,9 @@ open class BaseFragment : Fragment(), BaseOwner,FragmentHost {
                 }
                 BaseModel.BaseViewModelEvent.NavigateUpEvent->{
                     navigateUp()
+                }
+                else->{
+
                 }
             }
         })

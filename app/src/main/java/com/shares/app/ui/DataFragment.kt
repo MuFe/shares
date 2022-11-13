@@ -74,9 +74,7 @@ class DataFragment : BaseFragment() {
             }
         })
         mVm.check1.observe(viewLifecycleOwner,{event->
-            if(mVm.changeCheck.value!!){
-                setPrice()
-            }
+            setPrice()
         })
         mVm.check2.observe(viewLifecycleOwner,{event->
             if(mVm.changeCheck.value!!){
@@ -96,34 +94,14 @@ class DataFragment : BaseFragment() {
     }
 
     fun setPrice(){
-        var notification: Notification? = null
-        val manager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-        val remoteViews: RemoteViews =
-            RemoteViews(requireContext().getPackageName(), R.layout.notify) //RemoteView传入布局
-        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val id = "channelId"
-            val name = "channelName"
-            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
-            manager!!.createNotificationChannel(channel)
-            Notification.Builder(requireContext())
-                .setChannelId(id)
-                .setCustomContentView(remoteViews)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon)
-                .build()
-        } else {
-            NotificationCompat.Builder(requireContext())
-                .setContent(remoteViews)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon)
-                .build()
-        }
-        manager!!.notify(1, notification)
+        val it=Intent(requireActivity(),DataService::class.java)
+        requireActivity().startService(it)
     }
 
     fun setAl(title:String,hour:Int,min:Int,isShow:Boolean){
         val i = Intent(requireActivity(), MyReceiver::class.java)
         i.putExtra("title",title)
+        i
         //创建PendingIntent对象
         //创建PendingIntent对象
         val pi: PendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, i, 0)

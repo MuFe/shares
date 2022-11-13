@@ -35,7 +35,9 @@ class RegisterFragment : BaseFragment() {
                 LoginViewModel.ViewModelEvent.FinishLoginEvent->{
                     (activity as? MainHost)?.resetNavToHome()
                 }
+                else->{
 
+                }
             }
         })
     }

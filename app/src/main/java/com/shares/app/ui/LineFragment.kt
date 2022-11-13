@@ -43,9 +43,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mVm.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
 
-            }
         })
         mVm.listData.observe(viewLifecycleOwner, { listData ->
             //上证指数代码000001.IDX.SH

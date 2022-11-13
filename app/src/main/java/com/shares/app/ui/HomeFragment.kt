@@ -42,10 +42,7 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mVm.event.observe(viewLifecycleOwner, { event ->
-            when (event) {
 
-
-            }
         })
         mVm.listData.observe(viewLifecycleOwner, { listData ->
             initLine(

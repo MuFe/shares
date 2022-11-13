@@ -22,6 +22,9 @@ open class BaseDialogFragment : DialogFragment(),BaseOwner {
                         Status.ERROR->{
                             requireContext().toast(event.resource.message.orEmpty())
                         }
+                        else->{
+
+                        }
                     }
                 }
                 is BaseModel.BaseViewModelEvent.ToastIntEvent->{
@@ -32,6 +35,9 @@ open class BaseDialogFragment : DialogFragment(),BaseOwner {
                 }
                 BaseModel.BaseViewModelEvent.NavigateUpEvent->{
                     navigateUp()
+                }
+                else -> {
+
                 }
             }
         })

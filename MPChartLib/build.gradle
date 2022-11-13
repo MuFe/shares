@@ -2,14 +2,12 @@ apply plugin: 'com.android.library'
 
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '30.0.3'
     // resourcePrefix 'mpcht'
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 3
-        versionName '3.1.0'
+        targetSdkVersion 31
     }
     buildTypes {
         release {
@@ -31,6 +29,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
 }

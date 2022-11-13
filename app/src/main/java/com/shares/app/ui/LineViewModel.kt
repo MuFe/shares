@@ -50,6 +50,7 @@ class LineViewModel(
             var now=(System.currentTimeMillis()/1000-86400)
             now=(now.toDateStr("yyyy-MM-dd")+" 00:00:00").toDateStr("yyyy-MM-dd")
             networkUtil?.getK(0,now.toString()){
+                mBaseEvent.postValue(BaseViewModelEvent.ToastStrEvent("11111="+it.size))
                 mListData.postValue(it)
             }
         }
@@ -74,6 +75,7 @@ class LineViewModel(
                 last.low=v.low
             }
         }
+        mBaseEvent.postValue(BaseViewModelEvent.ToastStrEvent("22222="+temp.size))
         return temp
     }
 
