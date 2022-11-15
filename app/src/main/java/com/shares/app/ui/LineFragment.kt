@@ -49,10 +49,10 @@ class LineFragment(val mType: Int) : BaseFragment() {
             //上证指数代码000001.IDX.SH
             when(mType){
                 0->{
-                    kTimeData.parseKlineData(mVm.parseData(15*60*1000L,listData), "000001.IDX.SH", false)
+                    kTimeData.parseKlineData(mVm.parseData(15*60*1000,listData), "000001.IDX.SH", false)
                 }
                 1->{
-                    kTimeData.parseKlineData(mVm.parseData(60*60*1000L,listData), "000001.IDX.SH", false)
+                    kTimeData.parseKlineData(mVm.parseData(60*60*1000,listData), "000001.IDX.SH", false)
                 }
                 2->{
                     val temp=mVm.dayListData.value.orEmpty()+mVm.parseDayData(listData)

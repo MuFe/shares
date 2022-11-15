@@ -1,6 +1,7 @@
 package com.shares.app.ui
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -47,10 +48,9 @@ class LineViewModel(
 
     fun loadData(){
         loadData { v, result ->
-            var now=(System.currentTimeMillis()/1000-86400)
+            var now=(System.currentTimeMillis()/1000)
             now=(now.toDateStr("yyyy-MM-dd")+" 00:00:00").toDateStr("yyyy-MM-dd")
             networkUtil?.getK(0,now.toString()){
-                mBaseEvent.postValue(BaseViewModelEvent.ToastStrEvent("11111="+it.size))
                 mListData.postValue(it)
             }
         }
@@ -58,14 +58,15 @@ class LineViewModel(
 
     fun parseData(diff:Long,list:List<KLineDataModel>):List<KLineDataModel>{
         val temp= mutableListOf<KLineDataModel>()
-        var startTime=(System.currentTimeMillis()/1000-86400)
+        var startTime=(System.currentTimeMillis()/1000)
         startTime=(startTime.toDateStr("yyyy-MM-dd")+" 09:00:00").toDateStr("yyyy-MM-dd HH:mm:ss")
         var last:KLineDataModel?=null
         for((index,v) in list.withIndex()){
-            if(last==null||v.dateMills>startTime+diff){
+            if(last==null||v.dateMills>startTime){
                 if(last!=null){
-                    last.close=list.get(index-1).low
+                    last.close=list.get(index-1).close
                 }
+                v.dateMills=startTime
                 last=v
                 temp.add(last)
                 startTime+=diff
@@ -75,7 +76,7 @@ class LineViewModel(
                 last.low=v.low
             }
         }
-        mBaseEvent.postValue(BaseViewModelEvent.ToastStrEvent("22222="+temp.size))
+        Log.e("TAG",temp.size.toString()+"")
         return temp
     }
 
@@ -133,11 +134,11 @@ class LineViewModel(
     }
 
     fun delayGet(){
-//        viewModelScope.launch {
-//            delay(5000)
-//            loadData()
-//            delayGet()
-//        }
+        viewModelScope.launch {
+            delay(5000)
+            loadData()
+            delayGet()
+        }
     }
 
 

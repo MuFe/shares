@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".MyApplication"
         android:icon="@drawable/icon"
@@ -49,8 +50,10 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <service android:name=".ui.DataService"  android:exported="false">
-
+        <service android:name=".ui.DataService"  android:exported="true">
+            <intent-filter >
+                <action android:name="data_service"/>
+            </intent-filter>
         </service>
     </application>
 

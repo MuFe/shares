@@ -98,10 +98,13 @@
                             android:textColor="@{vm.isPlus?@color/red:@color/green}"
                             android:textSize="24dp" />
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="1dp"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="46dp"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -126,7 +129,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="17dp"
+                            android:layout_marginStart="10dp"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -148,14 +151,19 @@
                         </LinearLayout>
 
                         <View
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="1dp"/>
+                        <View
                             android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="17dp"
+                            android:layout_height="30dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="17dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@color/feeeeee" />
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="1dp"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -182,7 +190,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="15dp"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -200,9 +208,12 @@
                                 android:text="@{vm.min}"
                                 android:textColor="@color/green"
                                 android:textSize="12dp" />
-
-
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="1dp"/>
                     </LinearLayout>
                 </LinearLayout>
 

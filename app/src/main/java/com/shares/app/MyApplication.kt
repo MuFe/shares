@@ -9,8 +9,6 @@ import com.shares.app.di.commonModule
 import com.shares.app.di.networkModule
 import com.shares.app.di.viewModelModule
 import com.shares.app.image.ImageLoader
-import com.shares.app.ui.DataService
-import com.xdandroid.hellodaemon.DaemonEnv
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -39,7 +37,8 @@ class MyApplication : Application() {
                 .setBitmapPoolSize(2.0f)
                 .setMemoryCacheSize(1.5f)
                 .build()
-        DaemonEnv.initialize(applicationContext,DataService::class.java,60*1000)
+
+
     }
 
 

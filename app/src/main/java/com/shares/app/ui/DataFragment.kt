@@ -17,8 +17,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.content.Intent
 import android.os.Build
-import android.widget.RemoteViews
-import androidx.core.app.NotificationCompat
 import com.shares.app.R
 import java.util.*
 
@@ -95,13 +93,15 @@ class DataFragment : BaseFragment() {
 
     fun setPrice(){
         val it=Intent(requireActivity(),DataService::class.java)
-        requireActivity().startService(it)
+        it.action="data_service"
+//        DaemonEnv.startServiceMayBind(DataService::class.java)
+//        requireActivity().startService(it)
+        requireActivity().startForegroundService(it)
     }
 
     fun setAl(title:String,hour:Int,min:Int,isShow:Boolean){
         val i = Intent(requireActivity(), MyReceiver::class.java)
         i.putExtra("title",title)
-        i
         //创建PendingIntent对象
         //创建PendingIntent对象
         val pi: PendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, i, 0)

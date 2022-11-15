@@ -18,21 +18,14 @@ import com.shares.app.extension.toDateStr
 import com.shares.app.network.Status
 import com.shares.app.util.NetworkUtil
 import com.shares.app.util.PreferenceUtil
-import com.xdandroid.hellodaemon.AbsWorkService
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
-class DataService:AbsWorkService() {
+class DataService:Service() {
     private val networkUtil: NetworkUtil by inject()
-    private val util: PreferenceUtil by inject()
-    var temp=1
 
 
-    override fun onStart(intent: Intent?, startId: Int) {
-        super.onStart(intent, startId)
-        networkUtil.viewModelScope=CoroutineScope(Dispatchers.IO )
-        startGetDataFull()
-    }
+
 
     fun startGetDataFull(){
         CoroutineScope(Dispatchers.IO ).launch {
@@ -45,10 +38,8 @@ class DataService:AbsWorkService() {
     fun getData(){
         networkUtil.getPrice {
             var rate=0.0f
-            temp++
             if(it.yesterday.price!=0f){
                 rate=100*(it.current.price-it.yesterday.price)/it.yesterday.price
-                rate+=temp
             }
             var isPlus=false
             var change=""
@@ -97,30 +88,43 @@ class DataService:AbsWorkService() {
                 .setSmallIcon(R.drawable.icon)
                 .build()
         }
-        manager!!.notify(1, notification)
+        startForeground(1,notification)
     }
 
-    override fun onBind(intent: Intent?, alwaysNull: Void?): IBinder? {
+    override fun onStart(intent: Intent?, startId: Int) {
+        super.onStart(intent, startId)
+        setPrice("","",true)
+        networkUtil.viewModelScope=CoroutineScope(Dispatchers.IO )
+        startGetDataFull()
+    }
+
+    override fun onBind(p0: Intent?): IBinder? {
        return null
     }
-
-    override fun shouldStopService(intent: Intent?, flags: Int, startId: Int): Boolean {
-       return !util.getCheck1()
-    }
-
-    override fun startWork(intent: Intent?, flags: Int, startId: Int) {
-
-    }
-
-    override fun stopWork(intent: Intent?, flags: Int, startId: Int) {
-
-    }
-
-    override fun isWorkRunning(intent: Intent?, flags: Int, startId: Int): Boolean {
-        return true
-    }
-
-    override fun onServiceKilled(rootIntent: Intent?) {
-        TODO("Not yet implemented")
-    }
+//
+//    override fun onBind(intent: Intent?, alwaysNull: Void?): IBinder? {
+//       return null
+//    }
+//
+//    override fun shouldStopService(intent: Intent?, flags: Int, startId: Int): Boolean {
+//       return false
+//    }
+//
+//    override fun startWork(intent: Intent?, flags: Int, startId: Int) {
+//        isRunning=true
+//        networkUtil.viewModelScope=CoroutineScope(Dispatchers.IO )
+//        startGetDataFull()
+//    }
+//
+//    override fun stopWork(intent: Intent?, flags: Int, startId: Int) {
+//
+//    }
+//
+//    override fun isWorkRunning(intent: Intent?, flags: Int, startId: Int): Boolean {
+//        return isRunning
+//    }
+//
+//    override fun onServiceKilled(rootIntent: Intent?) {
+//        TODO("Not yet implemented")
+//    }
 }

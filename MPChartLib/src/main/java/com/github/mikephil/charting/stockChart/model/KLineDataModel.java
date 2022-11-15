@@ -10,7 +10,7 @@ public class KLineDataModel implements Serializable {
 
     //时间戳
 
-    private Long dateMills = 0L;
+
     private Long dataMills = 0L;
     private double high;// 最高价
     private double low;// 最低价
@@ -26,14 +26,11 @@ public class KLineDataModel implements Serializable {
     private double ma60;
 
     public Long getDateMills() {
-        if(dateMills==0){
-            return dataMills;
-        }
-        return dateMills;
+        return dataMills;
     }
 
     public void setDateMills(Long dateMills) {
-        this.dateMills = dateMills;
+        this.dataMills = dateMills;
     }
 
     public double getHigh() {

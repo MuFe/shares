@@ -1,10 +1,9 @@
 package com.shares.app
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
+import android.util.Base64
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -12,9 +11,13 @@ import androidx.navigation.Navigation
 import com.jaeger.library.StatusBarUtil
 import com.shares.app.databinding.ActivityMainBinding
 import com.shares.app.ui.MainHost
-import com.shares.app.util.KeyboardUtil
 import com.shares.app.util.PreferenceUtil
+import com.shares.app.util.TestUtil
 import org.koin.android.ext.android.inject
+import java.nio.charset.Charset
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+
 
 class MainActivity : AppCompatActivity(), MainHost {
     private lateinit var mBinding: ActivityMainBinding
@@ -67,6 +70,7 @@ class MainActivity : AppCompatActivity(), MainHost {
 
             }
         }
+        TestUtil.Decrypt("njk1!@bas31*@agv","r+05iJo6hhO+SSygEJQETHBmojGGJUSbBVQkEaLQ6VF78vMy+X6PmTPaQrW5Sy70gNDfHnIqTEFq50HU6wxY51oCwQaRaH2s44H+FMVghVm/21eh9LZgH7owYSa7QBREZ+MIm2NsJwC464yexB3ZzJ24mnqcbubFYg8TIOJVXsd3FtvV6fSIcKKU6Upq0yE5")
     }
 
     fun goHome() {
@@ -103,4 +107,5 @@ class MainActivity : AppCompatActivity(), MainHost {
         navGraph.setStartDestination( R.id.navigation_login)
         navController.graph = navGraph
     }
+
 }
