@@ -65,5 +65,7 @@ class KData(
     override fun getFlag(): Int {
         return flag
     }
-
+    companion object {
+        fun obtainEmptyKData() = KData(0f, 0f, 0f, 0f, 0, 0, null, FLAG_EMPTY)
+    }
 }

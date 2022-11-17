@@ -16,15 +16,13 @@ import com.github.wangyiqian.stockchart.StockChartConfig
 import com.github.wangyiqian.stockchart.childchart.kchart.KChartConfig
 import com.github.wangyiqian.stockchart.childchart.kchart.KChartFactory
 import com.github.wangyiqian.stockchart.childchart.timebar.TimeBarConfig
-import com.github.wangyiqian.stockchart.entities.FLAG_EMPTY
-import com.github.wangyiqian.stockchart.entities.Highlight
-import com.github.wangyiqian.stockchart.entities.IKEntity
-import com.github.wangyiqian.stockchart.entities.containFlag
+import com.github.wangyiqian.stockchart.entities.*
 import com.github.wangyiqian.stockchart.index.Index
 import com.github.wangyiqian.stockchart.listener.OnHighlightListener
 import com.github.wangyiqian.stockchart.util.NumberFormatUtil
 import com.shares.app.R
 import com.shares.app.base.BaseModel
+import com.shares.app.data.KData
 import com.shares.app.databinding.FragmentOneBinding
 import com.shares.app.extension.toDateStr
 import com.shares.app.util.KeyboardUtil
@@ -142,6 +140,11 @@ class LineFragment(val mType: Int) : BaseFragment() {
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
+                    val result= mutableListOf<KData>()
+                    for (i in 0 until (54-temp.size)) {
+                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
+                    }
+                    temp=temp+result
                 }
                 4->{
                     if(lastTime==0L){
@@ -149,10 +152,19 @@ class LineFragment(val mType: Int) : BaseFragment() {
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
+                    val result= mutableListOf<KData>()
+                    for (i in 0 until (12-temp.size)) {
+                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
+                    }
+                    temp=temp+result
                 }
                 5->{
+                    val result= mutableListOf<KData>()
+                    for (i in 0 until (10)) {
+                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
+                    }
                     if(lastTime==0L){
-                        temp=mVm.yearListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)
+                        temp=mVm.yearListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)+result
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
