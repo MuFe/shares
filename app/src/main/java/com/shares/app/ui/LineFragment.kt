@@ -77,6 +77,9 @@ class LineFragment(val mType: Int) : BaseFragment() {
             scaleAble=true
             scrollAble=true
             overScrollAble=false
+//            scaleAble = false
+//            scrollAble = false
+//            overScrollAble = false
             // 最大缩放比例
             scaleFactorMax = 2f
 
@@ -89,6 +92,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
             // 网格线设置
             gridVerticalLineCount = 3
             gridHorizontalLineCount = 4
+
             horizontalGridLineTopOffsetCalculator={
                 0f
             }
@@ -215,7 +219,10 @@ class LineFragment(val mType: Int) : BaseFragment() {
 
             height=keyboardUtil.dp2px(requireContext(), 250f)
             leftLabelConfig=null
-
+            indexColors= mutableListOf(
+                requireContext().resources.getColor(R.color.f6998d9),
+                requireContext().resources.getColor(R.color.fca9f92),
+                requireContext().resources.getColor(R.color.f7d5a9f))
             onHighlightListener = object : OnHighlightListener {
                 override fun onHighlight(highlight: Highlight) {
                     val idx = highlight.getIdx()
@@ -275,7 +282,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
         timeBarConfig.apply {
             // 背景色（时间条这里不像显示网格线，加个背景色覆盖掉）
 
-            type=TimeBarConfig.Type.FiveMinutes(SimpleDateFormat("HH:mm"))
+            type=TimeBarConfig.Type.FiveMinutes(SimpleDateFormat("MM/dd HH:mm"))
             // 长按标签背景色
             backGroundColor =requireContext().resources.getColor(R.color.white)
         }

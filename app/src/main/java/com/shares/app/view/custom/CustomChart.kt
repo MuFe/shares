@@ -511,8 +511,7 @@ class CustomChart(stockChart: IStockChart, chartConfig: CustomChartConfig) :
     private fun drawLabelOfFiveMinutesType(canvas: Canvas) {
         var lastDrawRight = getChartDisplayArea().left
         var lastDrawLabel = ""
-        val labelMinSpace = DimensionUtil.dp2px(context, 0f)
-        Log.e("TAG",DimensionUtil.dp2px(context, 50f).toString())
+        val labelMinSpace = DimensionUtil.dp2px(context, 50f)
         getKEntities().forEachIndexed { idx, kEntity ->
 
             if (kEntity.containFlag(FLAG_EMPTY)) return@forEachIndexed
@@ -536,7 +535,6 @@ class CustomChart(stockChart: IStockChart, chartConfig: CustomChartConfig) :
             }
 
             val x = centerRealX - labelHalfWidth
-            Log.e("TAG",centerRealX.toString()+"+"+x+"+"+lastDrawRight)
             val y =
                 getChartDisplayArea().top + getChartDisplayArea().height() / 2 + (tmpFontMetrics.bottom - tmpFontMetrics.top) / 2 - tmpFontMetrics.bottom
             canvas.drawText(label, x, y, labelPaint)
