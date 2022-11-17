@@ -333,6 +333,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/levelLay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -341,6 +342,7 @@
                         android:paddingStart="15dp"
                         android:paddingTop="12dp"
                         android:paddingEnd="15dp"
+                        android:onClick="@{()->vm.clickLevel()}"
                         android:paddingBottom="12dp">
 
                         <TextView

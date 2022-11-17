@@ -2,7 +2,6 @@ package com.shares.app.util
 
 
 import android.util.Log
-import com.github.mikephil.charting.stockChart.model.KLineDataModel
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import com.shares.app.base.BaseModel
@@ -12,7 +11,6 @@ import com.shares.app.network.Resource
 
 import kotlinx.coroutines.launch
 import okhttp3.*
-import org.json.JSONObject
 import retrofit2.HttpException
 
 
@@ -154,7 +152,7 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
         }
     }
 
-    fun getK(type:Int,date:String,listener: (List<KLineDataModel>) -> Unit) {
+    fun getK(type:Int,date:String,listener: (List<KData>) -> Unit) {
         viewModelScope?.launch {
             try{
                 val data = service.getK("datainfo/data/dailyData/get/"+type+"/"+date)

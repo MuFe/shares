@@ -18,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.content.Intent
 import android.os.Build
 import com.shares.app.R
+import com.shares.app.view.LevelPopupWindow
 import java.util.*
 
 
@@ -25,6 +26,7 @@ class DataFragment : BaseFragment() {
     private lateinit var mBinding: FragmentDataBinding
     private val mVm: DataViewModel by viewModel()
     private val networkUtil: NetworkUtil by inject()
+    private var popupWindow: LevelPopupWindow? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,10 +71,15 @@ class DataFragment : BaseFragment() {
                 DataViewModel.ViewModelEvent.ChangeEvent->{
                     (requireActivity() as MainHost).change(mVm.now.value.orEmpty(),mVm.change.value.orEmpty(),mVm.isPlus.value!!)
                 }
+                DataViewModel.ViewModelEvent.ShowLevelEvent->{
+                    createPop(mBinding.levelLay,mVm.levelInt.value!!)
+                }
             }
         })
         mVm.check1.observe(viewLifecycleOwner,{event->
-            setPrice()
+            if(event){
+                setPrice()
+            }
         })
         mVm.check2.observe(viewLifecycleOwner,{event->
             if(mVm.changeCheck.value!!){
@@ -125,6 +132,18 @@ class DataFragment : BaseFragment() {
                 am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi)
             }
         }
+    }
+
+    fun createPop(view: View,index:Int) {
+        if (popupWindow == null) {
+            popupWindow = LevelPopupWindow { nowData ->
+                mVm.levelInt.value=nowData
+                mVm.level.value=mVm.levelList.value!!.get(nowData)
+                popupWindow?.dismiss()
+            }
+            popupWindow?.setContent(requireContext(), this)
+        }
+        popupWindow?.showWithList(view, mVm.levelList.value!!,index)
     }
 
     override fun getBaseModel(): BaseModel {

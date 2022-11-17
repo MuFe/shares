@@ -1,5 +1,6 @@
 package com.shares.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jaeger.library.StatusBarUtil
 import com.shares.app.databinding.ActivityMainBinding
+import com.shares.app.ui.DataService
 import com.shares.app.ui.MainHost
 import com.shares.app.util.PreferenceUtil
 import com.shares.app.util.TestUtil
@@ -70,7 +72,14 @@ class MainActivity : AppCompatActivity(), MainHost {
 
             }
         }
-        TestUtil.Decrypt("njk1!@bas31*@agv","r+05iJo6hhO+SSygEJQETHBmojGGJUSbBVQkEaLQ6VF78vMy+X6PmTPaQrW5Sy70gNDfHnIqTEFq50HU6wxY51oCwQaRaH2s44H+FMVghVm/21eh9LZgH7owYSa7QBREZ+MIm2NsJwC464yexB3ZzJ24mnqcbubFYg8TIOJVXsd3FtvV6fSIcKKU6Upq0yE5")
+        if(mPreferenceUtil.getCheck1()){
+            val it= Intent(this, DataService::class.java)
+            it.action="data_service"
+//        DaemonEnv.startServiceMayBind(DataService::class.java)
+//        requireActivity().startService(it)
+            startForegroundService(it)
+        }
+        //TestUtil.Decrypt("njk1!@bas31*@agv","r+05iJo6hhO+SSygEJQETHBmojGGJUSbBVQkEaLQ6VF78vMy+X6PmTPaQrW5Sy70gNDfHnIqTEFq50HU6wxY51oCwQaRaH2s44H+FMVghVm/21eh9LZgH7owYSa7QBREZ+MIm2NsJwC464yexB3ZzJ24mnqcbubFYg8TIOJVXsd3FtvV6fSIcKKU6Upq0yE5")
     }
 
     fun goHome() {

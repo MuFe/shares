@@ -1,13 +1,10 @@
 package com.shares.app.network
 
 
-import com.github.mikephil.charting.stockChart.model.KLineDataModel
+
 import com.shares.app.data.*
 import okhttp3.FormBody
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.http.*
 
 interface ApiService {
@@ -45,7 +42,7 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @GET()
-    suspend fun getK(@Url url:String): List<KLineDataModel>
+    suspend fun getK(@Url url:String): List<KData>
 
     @Headers("Content-Type: application/json")
     @POST("userserver/user/payForVip")

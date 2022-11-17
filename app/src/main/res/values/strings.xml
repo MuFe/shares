@@ -97,5 +97,8 @@
     <string name="pay_error">支付失败</string>
     <string name="pay_contact_empty">联系方式不能为空</string>
 
-
+    <string name="mark_time">时间</string>
+    <string name="mark_max">高</string>
+    <string name="mark_min">低</string>
+    <string name="mark_now">当前</string>
 </resources>

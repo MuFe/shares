@@ -9,6 +9,7 @@
     <color name="red">#ea3324</color>
     <color name="green">#00FF00</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="line">#000000</color>
     <color name="main_check">#ea8532</color>
     <color name="bottom_check">#1778FD</color>
     <color name="bottom">#2E4944</color>
@@ -36,4 +37,6 @@
     <color name="f1778fd">#541778FD</color>
     <color name="f98bbf3">#98bbf3</color>
     <color name="home_top_line">#5cEEEEEE</color>
+    <color name="marker_bg">#0d1824</color>
+    <color name="f57bd6a">#57bd6a</color>
 </resources>

@@ -41,6 +41,7 @@ class DataViewModel(
     val check1 = MutableLiveData<Boolean>()
     val check2 = MutableLiveData<Boolean>()
     val check3 = MutableLiveData<Boolean>()
+    val levelList = MutableLiveData<List<String>>()
     private val mEvent = SingleLiveEvent<ViewModelEvent>()
     val event: LiveData<ViewModelEvent> = mEvent
     init {
@@ -60,9 +61,21 @@ class DataViewModel(
         now.value=""
         buyNumber.value=""
         buy.value=""
-        level.value="LV1"
         levelInt.value=0
         isPlus.value=true
+        val temp="LV1"
+        val temp1="LV2"
+        val temp2="LV3"
+        val temp3="LV4"
+        val temp4="LV5"
+        val tempList= mutableListOf<String>()
+        tempList.add(temp)
+        tempList.add(temp1)
+        tempList.add(temp2)
+        tempList.add(temp3)
+        tempList.add(temp4)
+        levelList.value=tempList
+        level.value=tempList.get(levelInt.value!!)
     }
     fun getUserInfo() {
         loadData() { it, result ->
@@ -175,7 +188,12 @@ class DataViewModel(
         }
     }
 
+    fun clickLevel(){
+        mEvent.postValue(ViewModelEvent.ShowLevelEvent)
+    }
+
     sealed class ViewModelEvent {
         object ChangeEvent : ViewModelEvent()
+        object ShowLevelEvent : ViewModelEvent()
     }
 }

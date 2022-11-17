@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemIndex"
+            type="Integer" />
+
+        <variable
+            name="data"
+            type="String" />
+
+        <variable
+            name="vm"
+            type="com.shares.app.adapter.LevelPopAdapter" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@{vm.select==itemIndex?@color/bottom_check:@color/white}"
+            android:onClick="@{()->vm.click(data,itemIndex)}"
+            android:text="@{data}" />
+
+    </LinearLayout>
+</layout>

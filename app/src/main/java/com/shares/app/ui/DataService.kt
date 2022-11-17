@@ -65,8 +65,8 @@ class DataService:Service() {
             remoteViews.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.red))
             remoteViews.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.red))
         }else{
-            remoteViews.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.green))
-            remoteViews.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.green))
+            remoteViews.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.f57bd6a))
+            remoteViews.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.f57bd6a))
         }
 
         remoteViews.setTextViewText(R.id.change,change)
