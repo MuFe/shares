@@ -17,7 +17,7 @@
         android:background="@color/page_bg">
 
         <ScrollView
-            isGone="@{vm.haveVip!=1}"
+            isGone="@{!vm.hide}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
@@ -33,30 +33,69 @@
                     android:background="@drawable/data_top"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/top"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="26dp"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{vm.day}"
+                                android:textColor="@color/white"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@{vm.time}"
+                                android:textColor="@color/white"
+                                android:textSize="16dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            isGone="@{vm.haveVip!=2}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/data_time_tip"
+                                android:textColor="@color/red"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{vm.timeDe}"
+                                android:textColor="@color/red"
+                                android:textSize="20dp" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vm.day}"
+                            android:layout_gravity="end|center_vertical"
+                            android:text="@string/app_name"
                             android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:textSize="22dp" />
+                    </FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@{vm.time}"
-                            android:textColor="@color/white"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -100,8 +139,9 @@
 
                         <View
                             android:layout_width="0dp"
-                            android:layout_weight="4"
-                            android:layout_height="1dp"/>
+                            android:layout_height="1dp"
+                            android:layout_weight="4" />
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -152,8 +192,9 @@
 
                         <View
                             android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="1dp"/>
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
                         <View
                             android:layout_width="1dp"
                             android:layout_height="30dp"
@@ -162,8 +203,9 @@
 
                         <View
                             android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="1dp"/>
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -212,8 +254,8 @@
 
                         <View
                             android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="1dp"/>
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -338,11 +380,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/ff7f8f9_4"
+                        android:onClick="@{()->vm.clickLevel()}"
                         android:orientation="horizontal"
                         android:paddingStart="15dp"
                         android:paddingTop="12dp"
                         android:paddingEnd="15dp"
-                        android:onClick="@{()->vm.clickLevel()}"
                         android:paddingBottom="12dp">
 
                         <TextView
@@ -386,9 +428,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="25dp"
                         android:background="@drawable/f1778fd_5"
                         android:orientation="vertical"
-                        android:layout_marginBottom="25dp"
                         android:padding="20dp">
 
                         <LinearLayout
@@ -470,11 +512,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/ff7f8f9_4"
                     android:orientation="horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:paddingStart="15dp"
                     android:paddingTop="12dp"
                     android:paddingEnd="15dp"
@@ -482,8 +524,8 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="@string/data_tip16"
                         android:textColor="@color/f333333"
                         android:textSize="14dp" />
@@ -492,25 +534,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{()->vm.chooseCheck(1)}"
-                        android:src="@{vm.check1?@drawable/data_check:@drawable/data_no_check}"/>
+                        android:src="@{vm.check1?@drawable/data_check:@drawable/data_no_check}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:text="@{vm.check1?@string/data_tip19:@string/data_tip20}"
                         android:textColor="@color/f333333"
-                        android:layout_marginStart="10dp"
                         android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/ff7f8f9_4"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:paddingStart="15dp"
                     android:paddingTop="12dp"
                     android:paddingEnd="15dp"
@@ -518,8 +560,8 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="@string/data_tip17"
                         android:textColor="@color/f333333"
                         android:textSize="14dp" />
@@ -528,25 +570,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{()->vm.chooseCheck(2)}"
-                        android:src="@{vm.check2?@drawable/data_check:@drawable/data_no_check}"/>
+                        android:src="@{vm.check2?@drawable/data_check:@drawable/data_no_check}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:text="@{vm.check2?@string/data_tip19:@string/data_tip20}"
                         android:textColor="@color/f333333"
-                        android:layout_marginStart="10dp"
                         android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/ff7f8f9_4"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:paddingStart="15dp"
                     android:paddingTop="12dp"
                     android:paddingEnd="15dp"
@@ -554,8 +596,8 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="@string/data_tip18"
                         android:textColor="@color/f333333"
                         android:textSize="14dp" />
@@ -564,16 +606,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{()->vm.chooseCheck(3)}"
-                        android:src="@{vm.check3?@drawable/data_check:@drawable/data_no_check}"/>
+                        android:src="@{vm.check3?@drawable/data_check:@drawable/data_no_check}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:text="@{vm.check3?@string/data_tip19:@string/data_tip20}"
                         android:textColor="@color/f333333"
-                        android:layout_marginStart="10dp"
                         android:textSize="14dp" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
@@ -584,7 +627,7 @@
 
 
         <TextView
-            isGone="@{vm.haveVip!=2}"
+            isGone="@{vm.hide}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

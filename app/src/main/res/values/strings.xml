@@ -72,6 +72,8 @@
     <string name="data_enter">是</string>
     <string name="data_no">否</string>
 
+    <string name="data_time_tip">体验时长</string>
+
 
     <string name="home_tip1">万股期权分佣</string>
     <string name="home_tip2">阅读值分佣</string>

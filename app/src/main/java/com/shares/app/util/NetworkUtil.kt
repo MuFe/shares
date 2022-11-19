@@ -43,11 +43,7 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
                 val data = service.register(body)
                 listener()
             }catch (e:Exception){
-                if(e::class==HttpException::class){
-                    viewModel?.onError(Resource.error("此账号已存在", null, 201))
-                }else{
-                    viewModel?.onError(Resource.error("网络不给力", null, 201))
-                }
+                viewModel?.onError(Resource.error("网络不给力", null, 201))
 
             }
         }
@@ -65,7 +61,11 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
                 val data = service.login(body)
                 listener(data)
             }catch (e:Exception){
-                viewModel?.onError(Resource.error("网络不给力", null, 201))
+                if(e::class==HttpException::class){
+                    viewModel?.onError(Resource.error("密码错误", null, 201))
+                }else{
+                    viewModel?.onError(Resource.error("网络不给力", null, 201))
+                }
             }
         }
     }

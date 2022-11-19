@@ -20,6 +20,7 @@ class DataViewModel(
     val mPreferenceUtil:PreferenceUtil
 ) : BaseModel(networkUtil) {
     val haveVip = MutableLiveData<Int>()
+    val hide = MutableLiveData<Boolean>()
     val day = MutableLiveData<String>()
     val numberTime = MutableLiveData<String>()
     val time = MutableLiveData<String>()
@@ -27,6 +28,7 @@ class DataViewModel(
     val yesterday = MutableLiveData<String>()
     val min = MutableLiveData<String>()
     val max = MutableLiveData<String>()
+    val timeDe = MutableLiveData<String>()
     val now = MutableLiveData<String>()
     val change = MutableLiveData<String>()
     val isPlus = MutableLiveData<Boolean>()
@@ -37,7 +39,6 @@ class DataViewModel(
     val levelInt = MutableLiveData<Int>()
     val buyNumberResult = MutableLiveData<String>()
     val buyResult = MutableLiveData<String>()
-    val selectIndex = MutableLiveData<Int>()
     val check1 = MutableLiveData<Boolean>()
     val check2 = MutableLiveData<Boolean>()
     val check3 = MutableLiveData<Boolean>()
@@ -46,6 +47,7 @@ class DataViewModel(
     val event: LiveData<ViewModelEvent> = mEvent
     init {
         haveVip.value=0
+        hide.value=mPreferenceUtil.isHide()
         check1.value=false
         check2.value=false
         check3.value=false
@@ -54,6 +56,7 @@ class DataViewModel(
         check2.value=mPreferenceUtil.getCheck2()
         check3.value=mPreferenceUtil.getCheck3()
         day.value=""
+        timeDe.value="15:00"
         numberTime.value=""
         yesterday.value=""
         today.value=""
@@ -85,6 +88,7 @@ class DataViewModel(
                 }else{
                     haveVip.value=2
                 }
+                mEvent.postValue(ViewModelEvent.FinishEvent)
             }
         }
     }
@@ -192,8 +196,10 @@ class DataViewModel(
         mEvent.postValue(ViewModelEvent.ShowLevelEvent)
     }
 
+
     sealed class ViewModelEvent {
         object ChangeEvent : ViewModelEvent()
         object ShowLevelEvent : ViewModelEvent()
+        object FinishEvent : ViewModelEvent()
     }
 }

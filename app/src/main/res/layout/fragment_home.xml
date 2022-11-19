@@ -10,7 +10,7 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,185 +19,217 @@
 
 
         <LinearLayout
+            isGone="@{!vm.hide}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/home_top"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="10dp">
-
-            <LinearLayout
-                android:id="@+id/top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{vm.time}"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{vm.value1}"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_tip1"
-                        android:textColor="@color/white"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/home_top_line" />
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{vm.value2}"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_tip2"
-                        android:textColor="@color/white"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/home_top_line" />
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{vm.value3}"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_tip3"
-                        android:textColor="@color/white"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="236dp"
-                android:layout_marginTop="25dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_top"
                 android:orientation="vertical"
                 android:paddingStart="16dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="16dp">
 
-                <TextView
-                    isGone="@{vm.value1==null}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/home_tip1+@string/home_tip4}"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
 
-                <com.shares.app.util.LineView
-                    android:id="@+id/chart1"
-                    isGone="@{vm.value1==null}"
+                <FrameLayout
+                    android:id="@+id/top"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.time}"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="22dp" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.value1}"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/home_tip1"
+                            android:textColor="@color/white"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/home_top_line" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.value2}"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/home_tip2"
+                            android:textColor="@color/white"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/home_top_line" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.value3}"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/home_tip3"
+                            android:textColor="@color/white"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="236dp"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
-                <TextView
-                    isGone="@{vm.value1==null}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/home_tip2+@string/home_tip4}"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <com.shares.app.util.LineView
-                    android:id="@+id/chart2"
-                    isGone="@{vm.value1==null}"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="236dp"
+                        android:layout_marginTop="25dp"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
+
+                        <TextView
+                            isGone="@{vm.value1==null}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/home_tip1+@string/home_tip4}"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <com.shares.app.util.LineView
+                            android:id="@+id/chart1"
+                            isGone="@{vm.value1==null}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="236dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
+
+                        <TextView
+                            isGone="@{vm.value1==null}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/home_tip2+@string/home_tip4}"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <com.shares.app.util.LineView
+                            android:id="@+id/chart2"
+                            isGone="@{vm.value1==null}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <TextView
+            isGone="@{vm.hide}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_btn_bg"
+            android:gravity="center"
+            android:onClick="@{()->vm.goPay()}"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:text="@string/data_btn"
+            android:textColor="@color/fa65c3d"
+            android:textSize="16dp" />
+    </FrameLayout>
 </layout>

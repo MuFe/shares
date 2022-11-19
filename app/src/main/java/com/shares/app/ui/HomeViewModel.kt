@@ -1,6 +1,7 @@
 package com.shares.app.ui
 
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,7 @@ class HomeViewModel(
     val mPreferenceUtil:PreferenceUtil
 ) : BaseModel(networkUtil) {
     val time = MutableLiveData<String>()
+    val hide = MutableLiveData<Boolean>()
     val value1 = MutableLiveData<String>()
     val value2 = MutableLiveData<String>()
     val value3 = MutableLiveData<String>()
@@ -31,6 +33,7 @@ class HomeViewModel(
         time.value=(System.currentTimeMillis()/1000).toDateStr("yyyy-MM-dd")
         value2.value=""
         value3.value=""
+        hide.value=mPreferenceUtil.isHide()
     }
 
     fun loadData(){
@@ -52,7 +55,9 @@ class HomeViewModel(
         }
     }
 
-
+    fun goPay(){
+        mBaseEvent.postValue(BaseViewModelEvent.NavigateEvent(R.id.navigation_pay, bundleOf()))
+    }
     sealed class ViewModelEvent {
         object FinishLoginEvent : ViewModelEvent()
         object RegisterEvent : ViewModelEvent()

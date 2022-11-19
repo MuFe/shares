@@ -59,6 +59,12 @@ class HomeFragment : BaseFragment() {
                 mBinding.chart2
             )
         })
+        val temp=(requireActivity() as MainHost).getTime()
+        temp.observe(viewLifecycleOwner,{event->
+            if(event.equals("0:00")){
+                mVm.hide.value=mPreferenceUtil.isHide()
+            }
+        })
     }
 
     fun initLine(
@@ -136,6 +142,10 @@ class HomeFragment : BaseFragment() {
         chartView.setDelayHide()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mVm.hide.value=mPreferenceUtil.isHide()
+    }
     override fun getBaseModel(): BaseModel {
         return mVm
     }

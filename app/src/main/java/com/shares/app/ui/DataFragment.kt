@@ -38,15 +38,20 @@ class DataFragment : BaseFragment() {
         val temp=ViewModelProviders.of(requireActivity())[LineViewModel::class.java]
         temp.loadNetWork(networkUtil)
         temp.loadDay()
-        val fragments = arrayOf<Fragment>(
-            LineFragment(0),
-            LineFragment(1),
-            LineFragment(2),
-            LineFragment(3),
-            LineFragment(4),
-            LineFragment(5),
-        )
-        val titles = arrayOf("15分","1时", "日K", "周K", "月K","年K")
+        val fragments= mutableListOf<Fragment>()
+        val titles= mutableListOf<String>()
+        titles.add("15分")
+        titles.add("1时")
+        titles.add("日K")
+        titles.add("周K")
+        titles.add("月K")
+        titles.add("年K")
+        fragments.add( LineFragment(0))
+        fragments.add( LineFragment(1))
+        fragments.add( LineFragment(2))
+        fragments.add( LineFragment(3))
+        fragments.add( LineFragment(4))
+        fragments.add( LineFragment(5))
         mBinding.viewPager.setOffscreenPageLimit(1)
         mBinding.viewPager.setAdapter(
             SimpleFragmentPagerAdapter(
@@ -55,12 +60,13 @@ class DataFragment : BaseFragment() {
                 titles
             )
         )
-
         mBinding.tab.setupWithViewPager(mBinding.viewPager)
+        mBinding.viewPager.setCurrentItem(2)
         mVm.startGetData()
         mVm.startGetDataFull()
         mVm.getUserInfo()
         temp.delayGet()
+
         return mBinding.root
     }
 
@@ -74,8 +80,14 @@ class DataFragment : BaseFragment() {
                 DataViewModel.ViewModelEvent.ShowLevelEvent->{
                     createPop(mBinding.levelLay,mVm.levelInt.value!!)
                 }
+                DataViewModel.ViewModelEvent.FinishEvent->{
+                    if(mVm.haveVip.value==2){
+                        (requireActivity() as MainHost).changTime()
+                    }
+                }
             }
         })
+
         mVm.check1.observe(viewLifecycleOwner,{event->
             if(event){
                 setPrice()
@@ -83,7 +95,7 @@ class DataFragment : BaseFragment() {
         })
         mVm.check2.observe(viewLifecycleOwner,{event->
             if(mVm.changeCheck.value!!){
-                setAl(requireContext().resources.getString(R.string.data_notify1),2,0,event)
+                setAl(requireContext().resources.getString(R.string.data_notify1),8,55,event)
             }
 //
         })
@@ -91,11 +103,16 @@ class DataFragment : BaseFragment() {
             if(mVm.changeCheck.value!!){
                 setAl(requireContext().resources.getString(R.string.data_notify2),17,25,event)
             }
-//
         })
-        mVm.selectIndex.observe(viewLifecycleOwner,{event->
-            (requireActivity() as MainHost).showFlow(event==0)
+
+        val temp=(requireActivity() as MainHost).getTime()
+        temp.observe(viewLifecycleOwner,{event->
+            mVm.timeDe.value=event
+            if(event.equals("0:00")){
+                mVm.hide.value=mPreferenceUtil.isHide()
+            }
         })
+
     }
 
     fun setPrice(){
@@ -145,6 +162,12 @@ class DataFragment : BaseFragment() {
         }
         popupWindow?.showWithList(view, mVm.levelList.value!!,index)
     }
+
+    override fun onResume() {
+        super.onResume()
+        mVm.hide.value=mPreferenceUtil.isHide()
+    }
+
 
     override fun getBaseModel(): BaseModel {
         return mVm
