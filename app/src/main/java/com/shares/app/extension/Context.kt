@@ -7,6 +7,8 @@ import android.os.Build
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.PermissionChecker
+import com.github.wangyiqian.stockchart.util.NumberFormatUtil
+import java.text.DecimalFormat
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -35,3 +37,14 @@ fun Context.checkPermissions(permission: String): Boolean {
         return true
     }
 }
+
+fun Float.FormatPrice():String{
+    val decimalFormat = DecimalFormat()
+    decimalFormat.run {
+        maximumFractionDigits = 3
+        minimumFractionDigits = 3
+        groupingSize = 3
+    }
+   return decimalFormat.format(this)
+}
+

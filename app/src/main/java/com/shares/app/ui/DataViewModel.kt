@@ -166,7 +166,7 @@ class DataViewModel(
             }
         }
         buyNumberResult.value=(temp/(1+temp1)).toInt().toString()
-        buyResult.value=((1+temp1)*temp2/temp).toInt().toString()
+        buyResult.value=((1+temp1)*temp2/temp).toFloat().toString()
     }
 
 

@@ -83,8 +83,8 @@
     <string name="pay_title">选择商品</string>
     <string name="pay_tip">半年卡</string>
     <string name="pay_tip1">年卡</string>
-    <string name="pay_tip2">￥600</string>
-    <string name="pay_tip3">￥1200</string>
+    <string name="pay_tip2">原价299&#160;首充</string>
+    <string name="pay_tip3">原价599&#160;首充</string>
     <string name="pay_tip4">首充</string>
     <string name="pay_tip5">折&#160;&#160;</string>
     <string name="pay_tip6">联系方式：</string>
@@ -93,6 +93,7 @@
     <string name="pay_tip9">支付宝</string>
     <string name="pay_tip10">微信</string>
     <string name="pay_tip11">请输入您的联系方式</string>
+    <string name="pay_tip12">￥</string>
     <string name="pay_btn">支付</string>
     <string name="pay_error">支付失败</string>
     <string name="pay_contact_empty">联系方式不能为空</string>

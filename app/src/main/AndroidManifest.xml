@@ -24,32 +24,6 @@
         <receiver android:name=".ui.MyReceiver" android:exported="false">
 
         </receiver>
-        <receiver
-            android:name="com.xdandroid.hellodaemon.WakeUpReceiver"
-            android:process=":watch"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <action android:name="com.xdandroid.hellodaemon.CANCEL_JOB_ALARM_SUB" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.xdandroid.hellodaemon.WakeUpReceiver$WakeUpAutoStartReceiver"
-            android:process=":watch"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
         <service android:name=".ui.DataService"  android:exported="true">
             <intent-filter >
                 <action android:name="data_service"/>

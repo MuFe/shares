@@ -45,11 +45,11 @@ class PayViewModel(
             networkUtil?.getVipPrice {
                 for(v in it){
                     if(v.vipType==0){
-                        price.value=v.price.toString()
-                        priceRate.value=String.format("%.2f",v.price*10f/600f)
+                        price.value=v.price.toInt().toString()
+                        priceRate.value=String.format("%.1f",v.price*10f/299f)
                     }else{
-                        price1.value=v.price.toString()
-                        priceRate1.value=String.format("%.2f",v.price*10f/1200f)
+                        price1.value=v.price.toInt().toString()
+                        priceRate1.value=String.format("%.1f",v.price*10f/599f)
                     }
                 }
             }

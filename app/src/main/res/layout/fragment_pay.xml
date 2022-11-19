@@ -102,7 +102,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:text="@string/pay_tip2"
+                                    android:text="@{@string/pay_tip12+vm.price}"
                                     android:textColor="@{vm.selectType==0?@color/white:@color/fff8b20}"
                                     android:textSize="18dp" />
 
@@ -110,7 +110,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:text="@{@string/pay_tip4+vm.priceRate+@string/pay_tip5+vm.price}"
+                                    android:text="@{@string/pay_tip2+vm.priceRate+@string/pay_tip5}"
                                     android:textColor="@{vm.selectType==0?@color/white:@color/f878e91}"
                                     android:textSize="12dp" />
                             </LinearLayout>
@@ -150,7 +150,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:text="@string/pay_tip3"
+                                    android:text="@{@string/pay_tip12+vm.price1}"
                                     android:textColor="@{vm.selectType==1?@color/white:@color/fff8b20}"
                                     android:textSize="18dp" />
 
@@ -158,7 +158,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:text="@{@string/pay_tip4+vm.priceRate1+@string/pay_tip5+vm.price1}"
+                                    android:text="@{@string/pay_tip3+vm.priceRate1+@string/pay_tip5}"
                                     android:textColor="@{vm.selectType==1?@color/white:@color/f878e91}"
                                     android:textSize="12dp" />
                             </LinearLayout>
@@ -246,6 +246,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

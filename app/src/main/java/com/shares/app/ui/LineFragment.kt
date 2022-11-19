@@ -24,6 +24,7 @@ import com.shares.app.R
 import com.shares.app.base.BaseModel
 import com.shares.app.data.KData
 import com.shares.app.databinding.FragmentOneBinding
+import com.shares.app.extension.FormatPrice
 import com.shares.app.extension.toDateStr
 import com.shares.app.util.KeyboardUtil
 import com.shares.app.view.LevelPopupWindow
@@ -75,9 +76,6 @@ class LineFragment(val mType: Int) : BaseFragment() {
             scaleAble=true
             scrollAble=true
             overScrollAble=false
-//            scaleAble = false
-//            scrollAble = false
-//            overScrollAble = false
             // 最大缩放比例
             scaleFactorMax = 2f
 
@@ -122,41 +120,39 @@ class LineFragment(val mType: Int) : BaseFragment() {
             }
             when(mType){
                 0->{
-                    temp=mVm.parseData(15*60*1000,listData,lastTime)
+                    temp=mVm.parseData(3*60*1000,listData,lastTime)
                 }
                 1->{
                     temp=mVm.parseData(60*60*1000,listData,lastTime)
                 }
                 2->{
                     if(lastTime==0L){
-                        temp=mVm.dayListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)
+                        temp= mVm.mergeFormat(mVm.dayListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy-MM-dd")
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
                 }
                 3->{
+                    val result= mutableListOf<KData>()
+                    for (i in 0 until 20) {
+                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
+                    }
                     if(lastTime==0L){
-                        temp=mVm.weekListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)
+                        temp=mVm.weekListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)+result
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
-                    val result= mutableListOf<KData>()
-                    for (i in 0 until (54-temp.size)) {
-                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
-                    }
-                    temp=temp+result
                 }
                 4->{
+                    val result= mutableListOf<KData>()
+                    for (i in 0 until 12) {
+                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
+                    }
                     if(lastTime==0L){
-                        temp=mVm.monthListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)
+                        temp= mVm.mergeFormat(mVm.monthListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy-MM")+result
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
-                    val result= mutableListOf<KData>()
-                    for (i in 0 until (12-temp.size)) {
-                        result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
-                    }
-                    temp=temp+result
                 }
                 5->{
                     val result= mutableListOf<KData>()
@@ -164,7 +160,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
                         result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
                     }
                     if(lastTime==0L){
-                        temp=mVm.yearListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)+result
+                        temp= mVm.mergeFormat(mVm.yearListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy")+result
                     }else{
                         temp=mVm.parseDayData(listData,lastTime)
                     }
@@ -189,20 +185,24 @@ class LineFragment(val mType: Int) : BaseFragment() {
                 }
             }else{
                 if(temp!=null&&temp.size>0){
-                    if(temp.size==1){
-                        val tempList=stockChartConfig.kEntities
+                    val tempList=stockChartConfig.kEntities
+
+                    val insert= mutableListOf<IKEntity>()
+
+                    for(vv in temp){
                         var have=false
                         for((index,v) in tempList.withIndex()){
-                            if(v.getTime()==temp.get(0).getTime()){
-                                stockChartConfig.modifyKEntity(index,temp.get(0))
+                            if(v.getTime()==vv.getTime()){
+                                stockChartConfig.modifyKEntity(index,vv)
                                 have=true
                             }
                         }
                         if(!have){
-                            stockChartConfig.appendRightKEntities(temp)
+                            insert.add(vv)
                         }
-                    }else{
-                        stockChartConfig.appendRightKEntities(temp)
+                    }
+                    if(insert.size>0){
+                        stockChartConfig.appendRightKEntities(insert)
                     }
                     mBinding.stockChart.notifyChanged()
                 }
@@ -219,7 +219,9 @@ class LineFragment(val mType: Int) : BaseFragment() {
         kChartConfig.apply {
             kChartType= KChartConfig.KChartType.CANDLE().apply {
                 highestAndLowestLabelConfig= KChartConfig.HighestAndLowestLabelConfig(
-                    { "${NumberFormatUtil.formatPrice(it)}" },
+                    {
+                        "${NumberFormatUtil.formatPrice(it)}"
+                    },
                     requireContext().getColor(R.color.black),
                     DEFAULT_K_CHART_HIGHEST_AND_LOWEST_LABEL_TEXT_SIZE,
                     DEFAULT_K_CHART_HIGHEST_AND_LOWEST_LABEL_LINE_STROKE_WIDTH,
@@ -275,7 +277,11 @@ class LineFragment(val mType: Int) : BaseFragment() {
             // 左侧标签设置
             rightLabelConfig = KChartConfig.LabelConfig(
                 5,
-                { "${NumberFormatUtil.formatPrice(it)}" },
+                {
+
+                    "${ it.FormatPrice()}"
+//                    "${NumberFormatUtil.formatPrice(it)}"
+                },
                 keyboardUtil.sp2px(requireContext(), 8.0f).toFloat(),
                 requireContext().resources.getColor(R.color.black),
                 keyboardUtil.dp2px(requireContext(), 10.0f).toFloat(),

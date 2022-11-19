@@ -12,7 +12,7 @@ import com.shares.app.misc.SingleLiveEvent
 import com.shares.app.util.NetworkUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+import java.util.Calendar
 
 
 class LineViewModel(
@@ -65,21 +65,20 @@ class LineViewModel(
         var startTime=(System.currentTimeMillis()/1000)
         startTime=(startTime.toDateStr("yyyy-MM-dd")+" 09:00:00").toDateStr("yyyy-MM-dd HH:mm:ss")
         var last:KData?=null
-        for((index,v) in list.withIndex()){
+        for(v in list){
             if(last==null||v.getTime()>startTime){
-                if(last!=null){
-                    last.setClosePrice(list.get(index-1).getClosePrice())
-                    startTime+=diff
-                }else{
-                    startTime+=diff
-                }
+                startTime+=diff
                 last=v
                 temp.add(last)
-            }else if(v.getHighPrice()>last.getHighPrice()){
-                last.setHighPrice(v.getHighPrice())
-            }else if(v.getLowPrice()<last.getLowPrice()){
-                last.setLowPrice(v.getLowPrice())
+            }else{
+                if(v.getHighPrice()>last.getHighPrice()){
+                    last.setHighPrice(v.getHighPrice())
+                }
+                if(v.getLowPrice()<last.getLowPrice()){
+                    last.setLowPrice(v.getLowPrice())
+                }
             }
+            last.setClosePrice(v.getClosePrice())
         }
         startTime=(System.currentTimeMillis()/1000)
         startTime=(startTime.toDateStr("yyyy-MM-dd")+" 09:00:00").toDateStr("yyyy-MM-dd HH:mm:ss")
@@ -110,17 +109,87 @@ class LineViewModel(
         if(tempList.size>0){
             val last:KData=tempList.last()
             last.setOpenPrice(tempList.first().getOpenPrice())
+            last.setTime(tempList.first().getTime())
             temp.add(last)
             for(v in tempList){
                 if(v.getHighPrice()>last.getHighPrice()){
                     last.setHighPrice(v.getHighPrice())
-                }else if(v.getLowPrice()<last.getLowPrice()){
+                }
+                if(v.getLowPrice()<last.getLowPrice()){
                     last.setLowPrice(v.getLowPrice())
                 }
             }
         }
         return temp
     }
+
+
+    fun mergeWeek(list:List<KData>,nowTemp:List<KData>):List<KData>{
+        val re= mutableListOf<KData>()
+        if(nowTemp.size>0){
+            val v=nowTemp.first()
+            if(list.size>0){
+                val last=list.last()
+                val todayCal: Calendar = Calendar.getInstance()
+                val dateCal: Calendar = Calendar.getInstance()
+
+                todayCal.setTimeInMillis(last.getTime())
+                dateCal.setTimeInMillis(v.getTime())
+                if(todayCal.get(Calendar.WEEK_OF_YEAR) == dateCal.get(Calendar.WEEK_OF_YEAR)){
+                    last.setTime(v.getTime())
+                    if(v.getHighPrice()>last.getHighPrice()){
+                        last.setHighPrice(v.getHighPrice())
+                    }
+                    if(v.getLowPrice()<last.getLowPrice()){
+                        last.setLowPrice(v.getLowPrice())
+                    }
+                    last.setClosePrice(v.getClosePrice())
+                    re.addAll(list)
+                }else{
+                    re.addAll(list)
+                    re.addAll(nowTemp)
+                }
+            }else{
+                re.addAll(nowTemp)
+            }
+        }else{
+            re.addAll(list)
+        }
+        return re
+    }
+
+    fun mergeFormat(list:List<KData>,nowTemp:List<KData>,format:String):List<KData>{
+        val re= mutableListOf<KData>()
+        if(nowTemp.size>0){
+            val v=nowTemp.first()
+            if(list.size>0){
+                val last=list.last()
+                if((last.getTime()/1000).toDateStr(format).equals((v.getTime()/1000).toDateStr(format))){
+                    last.setTime(v.getTime())
+                    if(v.getHighPrice()>last.getHighPrice()){
+                        last.setHighPrice(v.getHighPrice())
+                    }
+                    if(v.getLowPrice()<last.getLowPrice()){
+                        last.setLowPrice(v.getLowPrice())
+                    }
+                    last.setClosePrice(v.getClosePrice())
+                    re.addAll(list)
+                }else{
+                    re.addAll(list)
+                    re.addAll(nowTemp)
+                }
+            }else{
+                re.addAll(nowTemp)
+            }
+        }else{
+            re.addAll(list)
+        }
+        return re
+    }
+
+
+
+
 
     fun loadDay(){
         loadData { v, result ->
@@ -160,7 +229,7 @@ class LineViewModel(
 
     fun delayGet(){
         viewModelScope.launch {
-            delay(5000)
+            delay(30000)
             loadData()
             delayGet()
         }

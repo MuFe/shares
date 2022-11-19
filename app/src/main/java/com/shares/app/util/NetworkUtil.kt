@@ -23,8 +23,11 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
                 val data = service.getPassword("authserver/getPassword/"+pass)
                 listener(data.first)
             }catch (e:Exception){
-                Log.e("TAG",e.message.orEmpty())
-                viewModel?.onError(Resource.error("网络不给力", null, 201))
+                if(e::class==HttpException::class){
+                    viewModel?.onError(Resource.error("密码错误", null, 201))
+                }else{
+                    viewModel?.onError(Resource.error("网络不给力", null, 201))
+                }
             }
         }
     }

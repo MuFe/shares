@@ -47,7 +47,7 @@ class DataFragment : BaseFragment() {
             LineFragment(5),
         )
         val titles = arrayOf("15分","1时", "日K", "周K", "月K","年K")
-        mBinding.viewPager.setOffscreenPageLimit(fragments.size)
+        mBinding.viewPager.setOffscreenPageLimit(1)
         mBinding.viewPager.setAdapter(
             SimpleFragmentPagerAdapter(
                 parentFragmentManager,
