@@ -9,5 +9,6 @@ class VipData(
     val recommendId:String?,
     val userId:String?,
     val vipType:Int?,
+    val experienceTime:Int,
     val price:Float,
 )

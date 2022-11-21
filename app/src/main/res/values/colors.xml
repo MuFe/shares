@@ -38,8 +38,10 @@
     <color name="f98bbf3">#98bbf3</color>
     <color name="home_top_line">#5cEEEEEE</color>
     <color name="marker_bg">#0d1824</color>
-    <color name="f57bd6a">#57bd6a</color>
+    <color name="f57bd6a">#66bd94</color>
     <color name="f6998d9">#6998d9</color>
     <color name="fca9f92">#fa9f92</color>
     <color name="f7d5a9f">#7d5a9f</color>
+    <color name="f89fcfc">#89fcfc</color>
+    <color name="feefc60">#eefc60</color>
 </resources>

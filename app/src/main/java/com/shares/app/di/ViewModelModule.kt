@@ -15,6 +15,6 @@ val viewModelModule = module {
     viewModel { MyViewModel(get(),get()) }
     viewModel { PayViewModel(get(),get()) }
     viewModel { LineViewModel() }
-    viewModel { MainAcvitityViewModel(get()) }
+    viewModel { MainAcvitityViewModel(get(),get()) }
 }
 

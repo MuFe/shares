@@ -32,7 +32,7 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
         }
     }
 
-    fun register(name:String,pass:String,recommendId:String,listener: () -> Unit){
+    fun register(name:String,pass:String,recommendId:String,listener: (VipData) -> Unit){
         viewModelScope?.launch {
             try{
                 val map=HashMap<String,String>()
@@ -41,10 +41,9 @@ class NetworkUtil(val service: ApiService, val preferenceUtil: PreferenceUtil) {
                 map.put("recommendId",recommendId)
                 val body=RequestBody.create(MediaType.parse("application/json"), Gson().toJson(map))
                 val data = service.register(body)
-                listener()
+                listener(data)
             }catch (e:Exception){
                 viewModel?.onError(Resource.error("网络不给力", null, 201))
-
             }
         }
     }

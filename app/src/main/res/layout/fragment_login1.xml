@@ -15,11 +15,11 @@
         android:orientation="vertical">
 
 
-
         <ScrollView
-            android:layout_width="match_parent"
             android:id="@+id/top"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,6 +97,28 @@
                             android:textSize="16sp" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->vm.selectCheckValue()}"
+                            android:src="@{vm.check?@drawable/white_check_select:@drawable/white_check_no_select}" />
+
+                        <TextView
+                            android:id="@+id/tip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/register_tip1"
+                            android:textColor="@color/f666666"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"
@@ -104,8 +126,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
                         android:backgroundTint="@color/f4b80e7"
-                        android:onClick="@{()->vm.login()}"
                         android:gravity="center"
+                        android:onClick="@{()->vm.login()}"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:text="@string/login_btn"
@@ -119,8 +141,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
                         android:backgroundTint="@color/f4b80e7"
-                        android:onClick="@{()->vm.goRegister()}"
                         android:gravity="center"
+                        android:onClick="@{()->vm.goRegister()}"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:text="@string/login_register"
@@ -134,8 +156,8 @@
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="fitCenter"
                     android:background="@drawable/register_icon_bg"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/register_icon" />
             </FrameLayout>
         </ScrollView>

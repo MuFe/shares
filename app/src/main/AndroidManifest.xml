@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:name=".MyApplication"
         android:icon="@drawable/icon"
@@ -21,9 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ui.MyReceiver" android:exported="false">
-
-        </receiver>
+        <service android:name=".ui.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".ui.DataService"  android:exported="true">
             <intent-filter >
                 <action android:name="data_service"/>

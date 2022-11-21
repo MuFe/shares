@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), MainHost {
         if (mPreferenceUtil.isLogin()) {
             navGraph.setStartDestination(R.id.navigation_data)
             navController.graph = navGraph
+            mVm.getUserInfo()
         } else {
             navGraph.setStartDestination(R.id.navigation_login)
             navController.graph = navGraph
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity(), MainHost {
 
 
     override fun changTime() {
-       mVm.changeTime()
+
     }
 
     override fun getTime(): MutableLiveData<String> {
@@ -120,6 +121,7 @@ class MainActivity : AppCompatActivity(), MainHost {
         val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
         navGraph.setStartDestination( R.id.navigation_data)
         navController.graph = navGraph
+        mVm.getUserInfo()
 
     }
     override fun resetNavToLogin() {

@@ -76,14 +76,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/data_time_tip"
-                                android:textColor="@color/red"
+                                android:textColor="@color/feefc60"
                                 android:textSize="20dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{vm.timeDe}"
-                                android:textColor="@color/red"
+                                android:textColor="@color/feefc60"
                                 android:textSize="20dp" />
                         </LinearLayout>
 
@@ -116,7 +116,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{vm.now}"
-                                android:textColor="@{vm.isPlus?@color/red:@color/green}"
+                                android:textColor="@{vm.isPlus?@color/red:@color/f57bd6a}"
                                 android:textSize="26dp" />
 
                             <TextView
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
                             android:text="@{vm.change}"
-                            android:textColor="@{vm.isPlus?@color/red:@color/green}"
+                            android:textColor="@{vm.isPlus?@color/red:@color/f57bd6a}"
                             android:textSize="24dp" />
 
                         <View
@@ -248,7 +248,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:text="@{vm.min}"
-                                android:textColor="@color/green"
+                                android:textColor="@color/f57bd6a"
                                 android:textSize="12dp" />
                         </LinearLayout>
 
@@ -259,20 +259,254 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
-                    app:tabIndicatorColor="@color/black"
-                    app:tabIndicatorFullWidth="false"
-                    app:tabSelectedTextColor="@color/black" />
+                    android:orientation="horizontal">
 
-                <com.shares.app.view.NoTouchScrollViewpager
-                    android:id="@+id/view_pager"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="15分"
+                            android:gravity="center_vertical"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(0)}"
+                            android:drawablePadding="5dp"
+                            android:drawableBottom="@{vm.selectIndex==0?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==0?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1时"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(1)}"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableBottom="@{vm.selectIndex==1?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==1?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日K"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(2)}"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableBottom="@{vm.selectIndex==2?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==2?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周K"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(3)}"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableBottom="@{vm.selectIndex==3?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==3?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="月K"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(4)}"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableBottom="@{vm.selectIndex==4?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==4?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="年K"
+                            android:textSize="16dp"
+                            android:onClick="@{()->vm.clickIndex(5)}"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableBottom="@{vm.selectIndex==5?@drawable/line_select:@drawable/line_no_select}"
+                            android:textColor="@{vm.selectIndex==5?@color/black:@color/f878e91}" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="280dp"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp">
+
+                    <com.github.wangyiqian.stockchart.StockChart
+                        android:id="@+id/stock_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/market"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/marker_bg"
+                        android:minWidth="140dp"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@string/mark_time"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/marker_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@{vm.nowTime}"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@string/mark_max"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/marker_max"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@{vm.nowHigh}"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@string/mark_min"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/marker_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@{vm.nowLow}"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@string/mark_now"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/marker_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@{vm.nowPrice}"
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"

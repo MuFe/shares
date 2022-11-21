@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_register" />
 
     <fragment
+        android:id="@+id/navigation_web"
+        android:name="com.shares.app.ui.WebFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_web" />
+
+    <fragment
         android:id="@+id/navigation_data"
         android:name="com.shares.app.ui.DataFragment"
         android:label="@string/title_data"

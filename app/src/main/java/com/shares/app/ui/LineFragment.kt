@@ -50,7 +50,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
     private val handler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            mVm.hideHight.value=true
+            mBinding.market.visibility=View.GONE
         }
     }
 
@@ -80,7 +80,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
             scaleFactorMax = 2f
 
             scrollSmoothly = false
-
+            downColor=requireContext().resources.getColor(R.color.f57bd6a)
             // 最小缩放比例
             scaleFactorMin = 0.5f
 //            gridLineStrokeWidth = 0.5f
@@ -112,7 +112,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
 
         })
         mVm.listData.observe(viewLifecycleOwner, { listData ->
-           var temp:List<IKEntity>?=null
+           var temp:List<IKEntity>?= mutableListOf()
             var lastTime=0L
             if(stockChartConfig.getKEntitiesSize()!=0){
                 val last=stockChartConfig.kEntities.last()
@@ -120,16 +120,16 @@ class LineFragment(val mType: Int) : BaseFragment() {
             }
             when(mType){
                 0->{
-                    temp=mVm.parseData(3*60*1000,listData,lastTime)
+                    temp=mVm.parseData(15*60*1000,listData,lastTime)
                 }
                 1->{
                     temp=mVm.parseData(60*60*1000,listData,lastTime)
                 }
                 2->{
                     if(lastTime==0L){
-                        temp= mVm.mergeFormat(mVm.dayListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy-MM-dd")
+                        temp= mVm.mergeFormat(mVm.dayListData.value.orEmpty(),mVm.parseDayData(listData,lastTime,"yyyy-MM-dd"),"yyyy-MM-dd")
                     }else{
-                        temp=mVm.parseDayData(listData,lastTime)
+                        temp= mVm.parseDayData(listData,lastTime,"yyyy-MM-dd")
                     }
                 }
                 3->{
@@ -138,9 +138,9 @@ class LineFragment(val mType: Int) : BaseFragment() {
                         result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
                     }
                     if(lastTime==0L){
-                        temp=mVm.weekListData.value.orEmpty()+mVm.parseDayData(listData,lastTime)+result
+                        temp= mVm.mergeWeek(mVm.weekListData.value.orEmpty(),mVm.parseDayData(listData,lastTime,"yyyy-MM-dd"))+result
                     }else{
-                        temp=mVm.parseDayData(listData,lastTime)
+                        temp= mVm.parseDayData(listData,lastTime,"yyyy-MM-dd")
                     }
                 }
                 4->{
@@ -149,9 +149,10 @@ class LineFragment(val mType: Int) : BaseFragment() {
                         result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
                     }
                     if(lastTime==0L){
-                        temp= mVm.mergeFormat(mVm.monthListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy-MM")+result
+                        temp= mVm.mergeFormat(mVm.monthListData.value.orEmpty(),mVm.parseDayData(listData,lastTime,"yyyy-MM"),"yyyy-MM")+result
                     }else{
-                        temp=mVm.parseDayData(listData,lastTime)
+                        Log.e("TG",lastTime.toString()+"")
+                        temp= mVm.parseDayData(listData,lastTime,"yyyy-MM")
                     }
                 }
                 5->{
@@ -160,9 +161,9 @@ class LineFragment(val mType: Int) : BaseFragment() {
                         result.add(KData.obtainEmptyKData()) // 一年内还未产生的数据用EmptyKEntity()填充
                     }
                     if(lastTime==0L){
-                        temp= mVm.mergeFormat(mVm.yearListData.value.orEmpty(),mVm.parseDayData(listData,lastTime),"yyyy")+result
+                        temp= mVm.mergeFormat(mVm.yearListData.value.orEmpty(),mVm.parseDayData(listData,lastTime,"yyyy"),"yyyy")+result
                     }else{
-                        temp=mVm.parseDayData(listData,lastTime)
+                        temp= mVm.parseDayData(listData,lastTime,"yyyy")
                     }
                 }
             }
@@ -254,7 +255,23 @@ class LineFragment(val mType: Int) : BaseFragment() {
                         if (kEntity.containFlag(FLAG_EMPTY)) {
 
                         } else {
-                            val label =(kEntity.getTime()/1000).toDateStr("MM/dd HH:mm")
+                            var format="MM/dd HH:mm"
+                            when(mType){
+                                2->{
+                                    format="MM/dd"
+                                }
+                                3->{
+                                    format="MM/dd"
+                                }
+                                4->{
+                                    format="yyyy/MM"
+                                }
+                                5->{
+                                    format="yyyy"
+                                }
+                            }
+                            Log.e("TAG",kEntity.getTime().toString()+"+"+format)
+                            val label =(kEntity.getTime()/1000).toDateStr(format)
                             mVm.nowTime.value=label
                             mVm.nowPrice.value="${NumberFormatUtil.formatPrice(kEntity.getClosePrice())}"
                             mVm.nowHigh.value="${NumberFormatUtil.formatPrice(kEntity.getHighPrice())}"
@@ -266,7 +283,7 @@ class LineFragment(val mType: Int) : BaseFragment() {
 
                 override fun onHighlightBegin() {
                     handler.removeMessages(1000)
-                    mVm.hideHight.value=false
+                    mBinding.market.visibility=View.VISIBLE
                 }
 
                 override fun onHighlightEnd() {
@@ -299,8 +316,13 @@ class LineFragment(val mType: Int) : BaseFragment() {
 
         timeBarConfig.apply {
             // 背景色（时间条这里不像显示网格线，加个背景色覆盖掉）
+            if(mType!=0&&mType!=1){
+                labelTextColor=  requireContext().resources.getColor(R.color.white)
+                type=TimeBarConfig.Type.Day()
+            }else{
+                type=TimeBarConfig.Type.FiveMinutes(SimpleDateFormat("MM/dd HH:mm"))
+            }
 
-            type=TimeBarConfig.Type.FiveMinutes(SimpleDateFormat("MM/dd HH:mm"))
             // 长按标签背景色
             backGroundColor =requireContext().resources.getColor(R.color.white)
         }

@@ -79,13 +79,13 @@ class DataService:Service() {
                 .setChannelId(id)
                 .setCustomContentView(remoteViews)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon)
+                .setSmallIcon(R.drawable.small_icon)
                 .build()
         } else {
             NotificationCompat.Builder(applicationContext)
                 .setContent(remoteViews)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon)
+                .setSmallIcon(R.drawable.small_icon)
                 .build()
         }
         startForeground(1,notification)

@@ -9,6 +9,7 @@ import com.shares.app.R
 import com.shares.app.base.BaseModel
 import com.shares.app.extension.toDateStr
 import com.shares.app.misc.SingleLiveEvent
+import com.shares.app.ui.DataViewModel
 import com.shares.app.util.NetworkUtil
 import com.shares.app.util.PreferenceUtil
 import kotlinx.coroutines.delay
@@ -16,13 +17,14 @@ import kotlinx.coroutines.launch
 
 
 class MainAcvitityViewModel(
+    networkUtil: NetworkUtil,
     val mPreferenceUtil:PreferenceUtil
-) : BaseModel() {
+) : BaseModel(networkUtil) {
     val timeDe = MutableLiveData<String>()
     val timeDeInt = MutableLiveData<Int>()
     val hide = MutableLiveData<Boolean>()
     init{
-        timeDe.value="15:00"
+        timeDe.value=""
         timeDeInt.value=900
         hide.value=true
     }
@@ -46,11 +48,36 @@ class MainAcvitityViewModel(
                     mPreferenceUtil.setHide(false)
                 }
                 timeDe.value=(t/60).toString()+":"+ss
-
                 changeTime()
             }else{
                 hide.value=false
                 mPreferenceUtil.setHide(false)
+            }
+        }
+    }
+
+    fun getUserInfo() {
+        loadData() { it, result ->
+            networkUtil?.getVip {
+                if(!it.vipEndTime.isNullOrBlank()){
+                    hide.value=true
+                    mPreferenceUtil.setHide(true)
+                    timeDe.value="0:00"
+                }else{
+                    if(it.experienceTime>900) {
+                        hide.value = false
+                        mPreferenceUtil.setHide(false)
+                        timeDe.value="0:00"
+                    } else if(it.experienceTime==0){
+                        hide.value = false
+                        mPreferenceUtil.setHide(false)
+                        timeDe.value="0:00"
+                    }else{
+                        timeDeInt.value=900-it.experienceTime
+                        changeTime()
+                    }
+                }
+
             }
         }
     }

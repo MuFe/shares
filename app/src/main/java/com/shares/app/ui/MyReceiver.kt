@@ -26,13 +26,13 @@ class MyReceiver:BroadcastReceiver() {
                     .setChannelId(id)
                     .setStyle(Notification.BigTextStyle().bigText(title))
                     .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.drawable.icon)
+                    .setSmallIcon(R.drawable.small_icon)
                     .build()
             } else {
                 NotificationCompat.Builder(context)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(title))
                     .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.drawable.icon)
+                    .setSmallIcon(R.drawable.small_icon)
                     .build()
             }
             rePeat(context,title)

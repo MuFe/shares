@@ -17,15 +17,11 @@ import java.util.Calendar
 
 class LineViewModel(
 ) : BaseModel() {
-    val time = MutableLiveData<String>()
-    val isHour = MutableLiveData<Boolean>()
-    val hideHight = MutableLiveData<Boolean>()
+
     val nowPrice = MutableLiveData<String>()
     val nowTime = MutableLiveData<String>()
     val nowLow = MutableLiveData<String>()
     val nowHigh = MutableLiveData<String>()
-    private val mEvent = SingleLiveEvent<ViewModelEvent>()
-    val event: LiveData<ViewModelEvent> = mEvent
     private val mListData = MutableLiveData<List<KData>>()
     val listData: LiveData<List<KData>> = mListData
     private val mYearListData = MutableLiveData<List<KData>>()
@@ -36,10 +32,11 @@ class LineViewModel(
     val weekListData: LiveData<List<KData>> = mWeekListData
     private val mDayListData = MutableLiveData<List<KData>>()
     val dayListData: LiveData<List<KData>> = mDayListData
+    private val mEvent = SingleLiveEvent<ViewModelEvent>()
+    val event: LiveData<ViewModelEvent> = mEvent
+
     init {
-        time.value=(System.currentTimeMillis()/1000).toDateStr("yyyy-MM-dd")
-        isHour.value=false
-        hideHight.value=true
+
     }
 
     fun loadNetWork(tnetworkUtil:NetworkUtil){
@@ -54,7 +51,6 @@ class LineViewModel(
             var now=(System.currentTimeMillis()/1000)
             now=(now.toDateStr("yyyy-MM-dd")+" 00:00:00").toDateStr("yyyy-MM-dd")
             networkUtil?.getK(0,now.toString()){
-
                 mListData.postValue(it)
             }
         }
@@ -97,7 +93,7 @@ class LineViewModel(
         return re
     }
 
-    fun parseDayData(list:List<KData>,lastTime: Long):List<KData>{
+    fun parseDayData(list:List<KData>,lastTime: Long,format: String):List<KData>{
         val temp= mutableListOf<KData>()
         val tempList= mutableListOf<KData>()
         for(v in list){
@@ -109,7 +105,7 @@ class LineViewModel(
         if(tempList.size>0){
             val last:KData=tempList.last()
             last.setOpenPrice(tempList.first().getOpenPrice())
-            last.setTime(tempList.first().getTime())
+            last.setTime((tempList.first().getTime()/1000).toDateStr(format).toDateStr(format))
             temp.add(last)
             for(v in tempList){
                 if(v.getHighPrice()>last.getHighPrice()){
@@ -122,7 +118,6 @@ class LineViewModel(
         }
         return temp
     }
-
 
     fun mergeWeek(list:List<KData>,nowTemp:List<KData>):List<KData>{
         val re= mutableListOf<KData>()
@@ -158,6 +153,7 @@ class LineViewModel(
         return re
     }
 
+
     fun mergeFormat(list:List<KData>,nowTemp:List<KData>,format:String):List<KData>{
         val re= mutableListOf<KData>()
         if(nowTemp.size>0){
@@ -165,7 +161,8 @@ class LineViewModel(
             if(list.size>0){
                 val last=list.last()
                 if((last.getTime()/1000).toDateStr(format).equals((v.getTime()/1000).toDateStr(format))){
-                    last.setTime(v.getTime())
+                    last.setTime((v.getTime()/1000).toDateStr(format).toDateStr(format))
+                    Log.e("TAG",last.getTime().toString()+"+"+v.getTime().toString())
                     if(v.getHighPrice()>last.getHighPrice()){
                         last.setHighPrice(v.getHighPrice())
                     }
@@ -193,7 +190,7 @@ class LineViewModel(
 
     fun loadDay(){
         loadData { v, result ->
-            networkUtil?.getK(1,"0"){
+            networkUtil?.getK(1,"1"){
                 mDayListData.postValue(it)
                 loadWeek()
             }
@@ -202,7 +199,7 @@ class LineViewModel(
 
     fun loadWeek(){
         loadData { v, result ->
-            networkUtil?.getK(2,"0"){
+            networkUtil?.getK(2,"1"){
                 mWeekListData.postValue(it)
                 loadMonth()
             }
@@ -211,7 +208,7 @@ class LineViewModel(
 
     fun loadMonth(){
         loadData { v, result ->
-            networkUtil?.getK(3,"0"){
+            networkUtil?.getK(3,"1"){
                 mMonthListData.postValue(it)
                 loadYear()
             }
@@ -220,7 +217,7 @@ class LineViewModel(
 
     fun loadYear(){
         loadData { v, result ->
-            networkUtil?.getK(4,"0"){
+            networkUtil?.getK(4,"1"){
                 mYearListData.postValue(it)
                 loadData()
             }

@@ -9,8 +9,8 @@ import retrofit2.http.*
 
 interface ApiService {
     @Headers("Content-Type: application/json")
-    @POST("authserver/user/saveUser")
-    suspend fun register(@Body body: RequestBody): Any
+    @POST("userserver/user/saveUser")
+    suspend fun register(@Body body: RequestBody): VipData
 
 
     @POST("authserver/oauth/token?client_id=client&client_secret=123456&grant_type=password")

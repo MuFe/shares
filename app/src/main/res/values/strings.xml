@@ -2,6 +2,7 @@
     <string name="app_name">极豹数据</string>
 
     <string name="title_login">login</string>
+    <string name="title_web">web</string>
     <string name="title_home">home</string>
     <string name="title_register">register</string>
     <string name="title_data">data</string>
@@ -29,6 +30,7 @@
     <string name="register_btn">确认注册</string>
     <string name="register_invite">邀请人(可空):</string>
     <string name="register_tip">第一次登录将与手机进行绑定邀请码为对方用户名，可空</string>
+    <string name="register_tip1">同意极豹数据用户协议、免责声明与隐私政策</string>
 
     <string name="my_tip">账号：</string>
     <string name="my_tip1">会员到期日：</string>
@@ -104,4 +106,8 @@
     <string name="mark_max">高</string>
     <string name="mark_min">低</string>
     <string name="mark_now">当前</string>
+
+    <string name="privacy_title">用户协议</string>
+    <string name="privacy_tip">请同意用户协议</string>
+
 </resources>
