@@ -145,10 +145,10 @@ class DataFragment : BaseFragment() {
             setPrice(event)
         })
         mVm.check2.observe(viewLifecycleOwner,{event->
-            setAl(requireContext().resources.getString(R.string.data_notify1),8,55,event)
+            setAl(1000,requireContext().resources.getString(R.string.data_notify1),8,55,event)
         })
         mVm.check3.observe(viewLifecycleOwner,{event->
-            setAl(requireContext().resources.getString(R.string.data_notify2),17,25,event)
+            setAl(10001,requireContext().resources.getString(R.string.data_notify2),17,25,event)
         })
 
         val temp=(requireActivity() as MainHost).getTime()
@@ -278,9 +278,9 @@ class DataFragment : BaseFragment() {
        }
     }
 
-    fun setAl(title:String,hour:Int,min:Int,isShow:Boolean){
+    fun setAl(id:Int,title:String,hour:Int,min:Int,isShow:Boolean){
         val jb = JobInfo.Builder(
-            1000, ComponentName(
+            id, ComponentName(
                 requireContext().packageName,
                 MyJobService::class.java.getName()
             )
@@ -299,12 +299,12 @@ class DataFragment : BaseFragment() {
         jb.setMinimumLatency(t)
         jb.setOverrideDeadline(t+60*1000)
         jb.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-        jb.setTransientExtras(bundleOf("title" to title))
+        jb.setTransientExtras(bundleOf("title" to title,"id" to id))
         val jobInfo = jb.build()
 
         val jobScheduler =requireContext().getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
-        jobScheduler.cancel(1000)
+        jobScheduler.cancel(id)
         if(isShow){
             jobScheduler.schedule(jobInfo);
         }

@@ -14,7 +14,7 @@ import java.util.*
 
 class MyJobService:JobService() {
     override fun onStartJob(parameters: JobParameters): Boolean {
-        job( parameters.transientExtras.getString("title").orEmpty())
+        job( parameters.transientExtras.getInt("id",1000),parameters.transientExtras.getString("title").orEmpty())
        return false
     }
 
@@ -22,7 +22,7 @@ class MyJobService:JobService() {
         return true
     }
 
-    fun job(title: String){
+    fun job(id:Int,title: String){
         var notification: Notification? = null
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -43,13 +43,13 @@ class MyJobService:JobService() {
                 .setSmallIcon(R.drawable.small_icon)
                 .build()
         }
-        rePeat(applicationContext,title)
+        rePeat(id,applicationContext,title)
         manager!!.notify(1, notification)
     }
 
-    fun rePeat(context: Context,title:String){
+    fun rePeat(id:Int,context: Context,title:String){
         val jb = JobInfo.Builder(
-            1000, ComponentName(
+            id, ComponentName(
                 context.packageName,
                 MyJobService::class.java.getName()
             )
@@ -61,7 +61,7 @@ class MyJobService:JobService() {
         val jobInfo = jb.build()
         val jobScheduler =context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
-        jobScheduler.cancel(1000)
+        jobScheduler.cancel(id)
         jobScheduler.schedule(jobInfo);
     }
 
