@@ -39,6 +39,10 @@ class PayViewModel(
         selectIndex.value=0
         selectType.value=0
         contact.value=""
+        price1.value=""
+        priceRate1.value=""
+        priceRate.value=""
+        price.value=""
     }
     fun getData(){
         loadData() { it, result ->
@@ -92,6 +96,7 @@ class PayViewModel(
     fun getUserInfo() {
         loadData() { it, result ->
             networkUtil?.getVip {
+                mPreferenceUtil.setHide(true)
                 mBaseEvent.postValue(BaseViewModelEvent.NavigateUpEvent)
             }
         }

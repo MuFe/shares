@@ -386,7 +386,6 @@ class DataFragment : BaseFragment() {
                                     format="yyyy"
                                 }
                             }
-                            Log.e("TAG",kEntity.getTime().toString()+"+"+format)
                             val label =(kEntity.getTime()/1000).toDateStr(format)
                             mVm.nowTime.value=label
                             mVm.nowPrice.value="${NumberFormatUtil.formatPrice(kEntity.getClosePrice())}"
