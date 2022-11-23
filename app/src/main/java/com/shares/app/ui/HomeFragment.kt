@@ -1,9 +1,7 @@
 package com.shares.app.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +10,12 @@ import com.shares.app.R
 import com.shares.app.base.BaseModel
 import com.shares.app.data.LineData
 import com.shares.app.databinding.FragmentHomeBinding
-import com.shares.app.databinding.FragmentLoginBinding
-import com.shares.app.extension.toDateStr
 import com.shares.app.util.LineView
-import com.shares.app.util.MyLineChartRenderer
 import lecho.lib.hellocharts.model.*
-import lecho.lib.hellocharts.view.ColumnChartView
-import lecho.lib.hellocharts.view.LineChartView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment() {
     private lateinit var mBinding: FragmentHomeBinding
@@ -86,21 +79,27 @@ class HomeFragment : BaseFragment() {
         val yValues = mutableListOf<AxisValue>()
         var maxY = 0f;
         for ((index, value) in listData.withIndex()) {
-            if (maxY < value.getDataFromIndex(mIndex)) {
-                maxY = value.getDataFromIndex(mIndex)
+            var temp=value.getDataFromIndex(mIndex)
+            if (maxY < temp) {
+                maxY = temp
             }
             values.add(
                 PointValue(
                     (index + 1).toFloat(),
-                    value.getDataFromIndex(mIndex)
-                ).setLabel(String.format(requireContext().resources.getString(R.string.home_format1),value.getTimeStr(),value.wOption.toString()))
+                    temp
+                ).setLabel(String.format(requireContext().resources.getString(R.string.home_format1),value.getTimeStr(),temp))
             )
         }
-        val df = DecimalFormat("######0")
+        var df = DecimalFormat("0.0")
+        var t=0.1
+        if(mIndex==1){
+            df = DecimalFormat("0.000")
+            t=0.015
+        }
         for(index in 1..7){
-            val temp=df.format(index*maxY/7)
+            val temp=df.format(index*t)
             val value1 = AxisValue(temp.toFloat());
-            value1.setLabel(temp)
+            value1.setLabel(temp.toString())
             yValues.add(value1);
         }
         val line = Line(values)
@@ -111,7 +110,7 @@ class HomeFragment : BaseFragment() {
         line.setHasLabelsOnlyForSelected(true)
 
         line.setPointRadius(4)
-        line.setCubic(true)
+//        line.setCubic(true)
         line.setFilled(true)
         line.setHasLines(true)
         line.setHasPoints(true)
@@ -131,13 +130,17 @@ class HomeFragment : BaseFragment() {
         axisY.setTextSize(12);//设置字体大小
         axisY.setHasLines(true); //x 轴分割线
         axisY.setValues(yValues);
+        if(mIndex==1){
+            axisY.isInside=true
+        }
         axisY.setTextColor(requireContext().resources.getColor(R.color.f878e91));  //设置字体颜色
         data.setAxisYLeft(axisY);  //Y轴设置在左边
         chartView.lineChartData = data
         val viewPort = chartView.maximumViewport
         viewPort.left = -0f
-        viewPort.top =10+ chartView.currentViewport.top
-        viewPort.bottom = 0f
+        viewPort.bottom = -(chartView.currentViewport.top*0.01).toFloat()
+        viewPort.top = (chartView.currentViewport.top*1.1).toFloat()
+
         chartView.currentViewport = viewPort
         chartView.setDelayHide()
     }

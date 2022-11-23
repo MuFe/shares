@@ -40,7 +40,7 @@ class LineData(
         if(index==0){
             return wOption
         }else if(index==1){
-            return cOption
+            return rOption
         }else if(index==2){
             return sOption
         }else{
