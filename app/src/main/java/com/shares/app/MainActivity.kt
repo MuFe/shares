@@ -2,27 +2,18 @@ package com.shares.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jaeger.library.StatusBarUtil
 import com.shares.app.databinding.ActivityMainBinding
-import com.shares.app.ui.BaseFragment
 import com.shares.app.ui.DataService
-import com.shares.app.ui.DataViewModel
 import com.shares.app.ui.MainHost
 import com.shares.app.util.PreferenceUtil
-import com.shares.app.util.TestUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.nio.charset.Charset
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 
 
 class MainActivity : AppCompatActivity(), MainHost {
@@ -84,7 +75,6 @@ class MainActivity : AppCompatActivity(), MainHost {
 //        requireActivity().startService(it)
             startForegroundService(it)
         }
-        //TestUtil.Decrypt("njk1!@bas31*@agv","r+05iJo6hhO+SSygEJQETHBmojGGJUSbBVQkEaLQ6VF78vMy+X6PmTPaQrW5Sy70gNDfHnIqTEFq50HU6wxY51oCwQaRaH2s44H+FMVghVm/21eh9LZgH7owYSa7QBREZ+MIm2NsJwC464yexB3ZzJ24mnqcbubFYg8TIOJVXsd3FtvV6fSIcKKU6Upq0yE5")
     }
 
 
@@ -128,6 +118,9 @@ class MainActivity : AppCompatActivity(), MainHost {
         val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
         navGraph.setStartDestination( R.id.navigation_login)
         navController.graph = navGraph
+        val it= Intent(this, DataService::class.java)
+        it.action="data_service"
+        stopService(it)
     }
 
 }

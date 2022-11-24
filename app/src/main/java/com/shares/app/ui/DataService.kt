@@ -90,9 +90,9 @@ class DataService:Service() {
                 .setChannelId(id)
                 .setStyle(Notification.DecoratedCustomViewStyle())
                 .setCustomContentView(remoteViews1)
-                .setCustomBigContentView(remoteViews1)
+                .setCustomBigContentView(remoteViews)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.bottom_data_p)
+                .setSmallIcon(R.drawable.notify)
                 .build()
         }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val id = "channelId"
@@ -101,16 +101,16 @@ class DataService:Service() {
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
                 .setChannelId(id)
-                .setCustomContentView(remoteViews1)
+                .setCustomContentView(remoteViews)
                 .setCustomBigContentView(remoteViews)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.small_icon)
+                .setSmallIcon(R.drawable.notify)
                 .build()
         } else {
             NotificationCompat.Builder(applicationContext)
                 .setContent(remoteViews)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.small_icon)
+                .setSmallIcon(R.drawable.notify)
                 .build()
         }
         startForeground(1,notification)

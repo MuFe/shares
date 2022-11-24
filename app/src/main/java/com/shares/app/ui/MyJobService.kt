@@ -10,6 +10,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.os.bundleOf
 import com.shares.app.R
 import java.util.*
 
@@ -27,7 +28,19 @@ class MyJobService:JobService() {
     fun job(id:Int,title: String){
         var notification: Notification? = null
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val id = "channelId"
+            val name = "channelName"
+            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
+            manager!!.createNotificationChannel(channel)
+            Notification.Builder(applicationContext)
+                .setChannelId(id)
+                .setStyle(Notification.DecoratedCustomViewStyle())
+                .setContentTitle(title)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.notify)
+                .build()
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val id = "channelId"
             val name = "channelName"
             val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
@@ -36,13 +49,13 @@ class MyJobService:JobService() {
                 .setChannelId(id)
                 .setStyle(Notification.BigTextStyle().bigText(title))
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.small_icon)
+                .setSmallIcon(R.drawable.notify)
                 .build()
         } else {
             NotificationCompat.Builder(applicationContext)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(title))
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.small_icon)
+                .setSmallIcon(R.drawable.notify)
                 .build()
         }
         rePeat(id,applicationContext,title)
@@ -56,10 +69,11 @@ class MyJobService:JobService() {
                 MyJobService::class.java.getName()
             )
         )
-        jb.setMinimumLatency(86400)
-        jb.setOverrideDeadline(86400+60*1000)
-        jb.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-
+        jb.setMinimumLatency(86400*1000)
+        jb.setOverrideDeadline(86400*1000+60*1000)
+//        jb.setMinimumLatency(180*1000)
+//        jb.setOverrideDeadline(180*1000+60*1000)
+        jb.setTransientExtras(bundleOf("title" to title,"id" to id))
         val jobInfo = jb.build()
         val jobScheduler =context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 

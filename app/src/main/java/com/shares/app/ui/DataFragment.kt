@@ -293,15 +293,14 @@ class DataFragment : BaseFragment() {
         if(c.get(Calendar.HOUR_OF_DAY)>hour||(c.get(Calendar.HOUR_OF_DAY)==hour&&c.get(Calendar.MINUTE)>min)){
             c.set(Calendar.MINUTE, min)
             c.set(Calendar.HOUR_OF_DAY, hour)
-            c.add(Calendar.MINUTE, 86400)
+            c.add(Calendar.SECOND, 86400)
         }else{
             c.set(Calendar.MINUTE, min)
             c.set(Calendar.HOUR_OF_DAY, hour)
         }
         val t=c.getTimeInMillis()-System.currentTimeMillis()
         jb.setMinimumLatency(t)
-        jb.setOverrideDeadline(t+60*1000)
-        jb.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+        jb.setOverrideDeadline(t+20*1000)
         jb.setTransientExtras(bundleOf("title" to title,"id" to id))
         val jobInfo = jb.build()
 
