@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
 import android.widget.RemoteViews
@@ -60,24 +61,48 @@ class DataService:Service() {
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         val remoteViews: RemoteViews =
             RemoteViews(applicationContext.getPackageName(), R.layout.notify) //RemoteView传入布局
+        val remoteViews1: RemoteViews =
+            RemoteViews(applicationContext.getPackageName(), R.layout.notify1) //RemoteView传入布局
         remoteViews.setTextViewText(R.id.today,now)
+        remoteViews1.setTextViewText(R.id.today,now)
+
+
         if(plus){
             remoteViews.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.red))
+            remoteViews1.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.red))
             remoteViews.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.red))
+            remoteViews1.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.red))
         }else{
             remoteViews.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.f57bd6a))
+            remoteViews1.setTextColor(R.id.today,applicationContext.resources.getColor(R.color.f57bd6a))
             remoteViews.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.f57bd6a))
+            remoteViews1.setTextColor(R.id.change,applicationContext.resources.getColor(R.color.f57bd6a))
         }
 
         remoteViews.setTextViewText(R.id.change,change)
-        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        remoteViews1.setTextViewText(R.id.change,change)
+        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val id = "channelId"
             val name = "channelName"
             val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
                 .setChannelId(id)
-                .setCustomContentView(remoteViews)
+                .setStyle(Notification.DecoratedCustomViewStyle())
+                .setCustomContentView(remoteViews1)
+                .setCustomBigContentView(remoteViews1)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.bottom_data_p)
+                .build()
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val id = "channelId"
+            val name = "channelName"
+            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
+            manager!!.createNotificationChannel(channel)
+            Notification.Builder(applicationContext)
+                .setChannelId(id)
+                .setCustomContentView(remoteViews1)
+                .setCustomBigContentView(remoteViews)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.small_icon)
                 .build()

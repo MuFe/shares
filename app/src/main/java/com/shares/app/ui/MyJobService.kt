@@ -8,13 +8,15 @@ import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.shares.app.R
 import java.util.*
 
 class MyJobService:JobService() {
     override fun onStartJob(parameters: JobParameters): Boolean {
-        job( parameters.transientExtras.getInt("id",1000),parameters.transientExtras.getString("title").orEmpty())
+        Log.e("TAG",System.currentTimeMillis().toString())
+        job(parameters.transientExtras.getInt("id",1000),parameters.transientExtras.getString("title").orEmpty())
        return false
     }
 
@@ -44,7 +46,7 @@ class MyJobService:JobService() {
                 .build()
         }
         rePeat(id,applicationContext,title)
-        manager!!.notify(1, notification)
+        manager!!.notify(id, notification)
     }
 
     fun rePeat(id:Int,context: Context,title:String){

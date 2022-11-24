@@ -74,7 +74,7 @@ class DataViewModel(
         check2.value=mPreferenceUtil.getCheck2()
         check3.value=mPreferenceUtil.getCheck3()
         day.value=""
-        timeDe.value="15:00"
+        timeDe.value=""
         numberTime.value=""
         yesterday.value=""
         today.value=""
@@ -121,25 +121,27 @@ class DataViewModel(
     fun getData(){
         loadData() { it, result ->
             networkUtil?.getPrice {
-                day.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("yyyy-MM-dd")
-                time.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("HH:mm")
-                now.value=it.current.price.toString()
-                today.value=it.current.maxPrice.toString()
-                yesterday.value=it.yesterday.price.toString()
-                max.value=it.current.maxPrice.toString()
-                min.value=it.current.minPrice.toString()
-                var rate=0.0f
-                if(it.yesterday.price!=0f){
-                    rate=100*(it.current.price-it.yesterday.price)/it.yesterday.price
+                if(it.current.price!=0.0f){
+                    day.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("yyyy-MM-dd")
+                    time.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("HH:mm")
+                    now.value=it.current.price.toString()
+                    today.value=it.current.maxPrice.toString()
+                    yesterday.value=it.yesterday.price.toString()
+                    max.value=it.current.maxPrice.toString()
+                    min.value=it.current.minPrice.toString()
+                    var rate=0.0f
+                    if(it.yesterday.price!=0f){
+                        rate=100*(it.current.price-it.yesterday.price)/it.yesterday.price
+                    }
+                    if(rate>=0){
+                        isPlus.value=true
+                        change.value="+"+String.format("%.2f",rate)+"%"
+                    }else{
+                        isPlus.value=false
+                        change.value=String.format("%.2f",rate)+"%"
+                    }
+                    mEvent.postValue(ViewModelEvent.ChangeEvent)
                 }
-                if(rate>=0){
-                    isPlus.value=true
-                    change.value="+"+String.format("%.2f",rate)+"%"
-                }else{
-                    isPlus.value=false
-                    change.value=String.format("%.2f",rate)+"%"
-                }
-                mEvent.postValue(ViewModelEvent.ChangeEvent)
             }
         }
     }

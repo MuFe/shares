@@ -91,12 +91,14 @@ class HomeFragment : BaseFragment() {
             )
         }
         var df = DecimalFormat("0.0")
-        var t=0.1
+        var t=0.2
         if(mIndex==1){
             df = DecimalFormat("0.000")
-            t=0.015
+            t=0.02
         }
-        for(index in 1..7){
+        var count=(maxY/t).toInt()+1
+
+        for(index in 1..count){
             val temp=df.format(index*t)
             val value1 = AxisValue(temp.toFloat());
             value1.setLabel(temp.toString())

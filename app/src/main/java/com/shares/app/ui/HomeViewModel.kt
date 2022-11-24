@@ -46,9 +46,9 @@ class HomeViewModel(
                     if(temp>timeInt){
                         timeInt=temp
                         time.value=(timeInt/1000).toDateStr("yyyy-MM-dd")
-                        value1.value=v.wOption.toString()
-                        value2.value=v.cOption.toString()
-                        value3.value=v.sOption.toString()
+                        value1.value=v.getDataFromIndex(0).toString()
+                        value2.value=v.getDataFromIndex(1).toString()
+                        value3.value=v.getDataFromIndex(2).toString()
                     }
                 }
             }

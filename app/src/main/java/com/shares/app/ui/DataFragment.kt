@@ -1,13 +1,10 @@
 package com.shares.app.ui
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -16,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import com.github.wangyiqian.stockchart.DEFAULT_K_CHART_HIGHEST_AND_LOWEST_LABEL_LINE_LENGTH
 import com.github.wangyiqian.stockchart.DEFAULT_K_CHART_HIGHEST_AND_LOWEST_LABEL_LINE_STROKE_WIDTH
@@ -272,6 +270,11 @@ class DataFragment : BaseFragment() {
 //        DaemonEnv.startServiceMayBind(DataService::class.java)
 //        requireActivity().startService(it)
        if(isShow){
+           val notification = NotificationManagerCompat.from(requireContext())
+           val isEnabled = notification.areNotificationsEnabled()
+           if (!isEnabled) {
+               open()
+           }
            requireActivity().startForegroundService(it)
        }else{
            requireActivity().stopService(it)
@@ -306,8 +309,22 @@ class DataFragment : BaseFragment() {
 
         jobScheduler.cancel(id)
         if(isShow){
+            val notification = NotificationManagerCompat.from(requireContext())
+            val isEnabled = notification.areNotificationsEnabled()
+            if (!isEnabled) {
+               open()
+            }
             jobScheduler.schedule(jobInfo);
         }
+    }
+
+    fun open(){
+        val intent = Intent()
+        intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+        intent.putExtra("app_package", requireContext().packageName)
+        intent.putExtra("app_uid", requireContext().applicationInfo.uid)
+        intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+        requireContext().startActivity(intent)
     }
 
     fun createPop(view: View,index:Int) {
