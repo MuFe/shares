@@ -18,6 +18,8 @@ class PreferenceUtil(val context: Context) {
         private const val CHECK2 = "check2"
         private const val CHECK3 = "check3"
         private const val Hide = "hide"
+        private const val SaveTitle = "save_title"
+        private const val SaveTime = "save_time"
     }
 
     private val mSharedPreference =
@@ -41,6 +43,8 @@ class PreferenceUtil(val context: Context) {
             putBoolean(CHECK2, false)
             putBoolean(CHECK3, false)
             putBoolean(Hide, true)
+            putString(SaveTitle, "")
+            putLong(SaveTime,0)
         }
     }
 
@@ -93,6 +97,28 @@ class PreferenceUtil(val context: Context) {
     fun setHide(value:Boolean){
         mSharedPreference.edit {
             putBoolean(Hide, value)
+        }
+    }
+
+    fun setSave(value:String,time:Long){
+        mSharedPreference.edit {
+            putString(SaveTitle, value)
+            putLong(SaveTime,time)
+        }
+    }
+
+    fun getSaveTitle():String{
+        return mSharedPreference.getString(SaveTitle,"").orEmpty()
+    }
+
+    fun getSaveTime():Long{
+        return mSharedPreference.getLong(SaveTime,0)
+    }
+
+    fun clearSave(){
+        mSharedPreference.edit {
+            putString(SaveTitle, "")
+            putLong(SaveTime,0)
         }
     }
 

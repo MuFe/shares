@@ -181,7 +181,7 @@ public class CalendarReminderUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
 
-    public static void addCalendarEvent(Context context, String title, String description, long reminderTime, int previousDate) {
+    public static void addCalendarEvent(Context context, String title, String description, long reminderTime) {
 
         if (context == null) {
 
@@ -205,7 +205,7 @@ public class CalendarReminderUtils {
 
         long start = mCalendar.getTime().getTime();
 
-        mCalendar.setTimeInMillis(start + 10 * 60 * 1000);//设置终止时间，开始时间加10分钟
+        mCalendar.setTimeInMillis(start +60 * 1000);//设置终止时间，开始时间加10分钟
 
         long end = mCalendar.getTime().getTime();
 
@@ -216,12 +216,13 @@ public class CalendarReminderUtils {
         event.put("description", description);
 
         event.put("calendar_id", calId); //插入账户的id
-
         event.put(CalendarContract.Events.DTSTART, start);
 
         event.put(CalendarContract.Events.DTEND, end);
+        event.put(CalendarContract.Events.RRULE, "FREQ=DAILY;COUNT=3");
 
         event.put(CalendarContract.Events.HAS_ALARM, 1);//设置有闹钟提醒
+
 
         event.put(CalendarContract.Events.EVENT_TIMEZONE, "Asia/Shanghai");//这个是时区，必须有
 
@@ -239,7 +240,7 @@ public class CalendarReminderUtils {
 
         values.put(CalendarContract.Reminders.EVENT_ID, ContentUris.parseId(newEvent));
 
-        values.put(CalendarContract.Reminders.MINUTES, previousDate * 24 * 60);// 提前previousDate天有提醒
+        values.put(CalendarContract.Reminders.MINUTES, 1);// 提前previousDate天有提醒
 
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
 

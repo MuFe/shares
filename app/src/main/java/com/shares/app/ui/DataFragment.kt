@@ -1,5 +1,6 @@
 package com.shares.app.ui
 
+import android.Manifest
 import android.app.NotificationManager
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -9,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -18,6 +20,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import com.github.wangyiqian.stockchart.DEFAULT_K_CHART_HIGHEST_AND_LOWEST_LABEL_LINE_LENGTH
@@ -40,6 +44,7 @@ import com.shares.app.base.BaseModel
 import com.shares.app.data.KData
 import com.shares.app.databinding.FragmentDataBinding
 import com.shares.app.extension.FormatPrice
+import com.shares.app.extension.checkPermissions
 import com.shares.app.extension.toDateStr
 import com.shares.app.util.CalendarReminderUtils
 import com.shares.app.util.KeyboardUtil
@@ -74,6 +79,20 @@ class DataFragment : BaseFragment() {
             mBinding.market.visibility=View.GONE
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private val mGrantStoragePermissionResult =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+            val title=mPreferenceUtil.getSaveTitle()
+            val saveTime=mPreferenceUtil.getSaveTime()
+            if(saveTime!=0L){
+                parseStoragePermission(false,title,saveTime,true)
+            }else{
+                parseStoragePermission(false,title,saveTime,false)
+            }
+
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -310,13 +329,7 @@ class DataFragment : BaseFragment() {
         if(t<0){
            t=t+86400*1000
         }
-//        CalendarReminderUtils.addCalendarEvent(requireContext(),title,title,System.currentTimeMillis()+t,2);
-//        val request=OneTimeWorkRequest.Builder(MyWork::class.java)
-//            .setInitialDelay(t/1000, TimeUnit.SECONDS)
-//            .setInputData(workDataOf("id" to id,"title" to title))
-//            .build()
-//        WorkManager.getInstance(requireContext()).enqueue(request)
-//        Log.e("TAG",t.toString())
+        parseStoragePermission(true,title,System.currentTimeMillis()+t+2*60*1000,isShow)
         jb.setMinimumLatency(t)
         jb.setOverrideDeadline(t+20*1000)
         jb.setTransientExtras(bundleOf("title" to title,"id" to id))
@@ -331,7 +344,7 @@ class DataFragment : BaseFragment() {
             if (!isEnabled) {
                open()
             }
-            jobScheduler.schedule(jobInfo);
+            jobScheduler.schedule(jobInfo)
         }
     }
 
@@ -476,6 +489,40 @@ class DataFragment : BaseFragment() {
             backGroundColor =requireContext().resources.getColor(R.color.white)
         }
 
+    }
+    @RequiresApi(23)
+    private fun isPermissionsGranted(): Boolean {
+        return requireContext().checkPermissions(Manifest.permission.READ_CALENDAR) && requireContext().checkPermissions(
+            Manifest.permission.WRITE_CALENDAR
+        )
+    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun parseStoragePermission(first: Boolean,title: String,time:Long,isShow:Boolean) {
+        if (!isPermissionsGranted()) {
+            if (first) {
+                if(isShow){
+                    mPreferenceUtil.setSave(title,time)
+                    mGrantStoragePermissionResult.launch(
+                        arrayOf(
+                            Manifest.permission.WRITE_CALENDAR,
+                            Manifest.permission.READ_CALENDAR
+                        )
+                    )
+                }else{
+                    mPreferenceUtil.setSave(title,0)
+                }
+                return
+            } else {
+                if (!isPermissionsGranted()) {
+                    return
+                }
+            }
+        }
+        CalendarReminderUtils.deleteCalendarEvent(requireContext(),title)
+        if(isShow){
+            CalendarReminderUtils.addCalendarEvent(requireContext(),title,title,time)
+        }
+        mPreferenceUtil.clearSave()
     }
 
 

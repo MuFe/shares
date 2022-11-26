@@ -1,5 +1,6 @@
 package com.shares.app.ui
 
+import android.Manifest
 import android.app.*
 import android.app.job.JobInfo
 import android.app.job.JobParameters
@@ -9,9 +10,12 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import com.shares.app.R
+import com.shares.app.extension.checkPermissions
+import com.shares.app.util.CalendarReminderUtils
 import java.util.*
 
 class MyJobService:JobService() {
@@ -23,8 +27,16 @@ class MyJobService:JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
         return true
     }
-
+    @RequiresApi(23)
+    private fun isPermissionsGranted(): Boolean {
+        return applicationContext.checkPermissions(Manifest.permission.READ_CALENDAR) && applicationContext.checkPermissions(
+            Manifest.permission.WRITE_CALENDAR
+        )
+    }
     fun job(id:Int,title: String){
+       if(isPermissionsGranted()){
+           CalendarReminderUtils.deleteCalendarEvent(applicationContext,title)
+       }
         var notification: Notification? = null
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
