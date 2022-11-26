@@ -1,13 +1,18 @@
 package com.shares.app.ui
 
+import android.app.NotificationManager
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +41,7 @@ import com.shares.app.data.KData
 import com.shares.app.databinding.FragmentDataBinding
 import com.shares.app.extension.FormatPrice
 import com.shares.app.extension.toDateStr
+import com.shares.app.util.CalendarReminderUtils
 import com.shares.app.util.KeyboardUtil
 import com.shares.app.view.LevelPopupWindow
 import com.shares.app.view.custom.CustomChartConfig
@@ -44,6 +50,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class DataFragment : BaseFragment() {
@@ -128,6 +135,10 @@ class DataFragment : BaseFragment() {
         mVm.event.observe(viewLifecycleOwner, { event ->
             when (event) {
                 DataViewModel.ViewModelEvent.ChangeEvent->{
+                    if(mVm.isHide.value==true){
+                        mVm.isHide.value=false
+                        setPrice(mVm.check1.value!!)
+                    }
                     (requireActivity() as MainHost).change(mVm.now.value.orEmpty(),mVm.change.value.orEmpty(),mVm.isPlus.value!!)
                 }
                 DataViewModel.ViewModelEvent.ShowLevelEvent->{
@@ -135,6 +146,9 @@ class DataFragment : BaseFragment() {
                 }
                 DataViewModel.ViewModelEvent.FinishEvent->{
                   
+                }
+                DataViewModel.ViewModelEvent.HideEvent->{
+                    setPrice(false)
                 }
             }
         })
@@ -267,8 +281,6 @@ class DataFragment : BaseFragment() {
     fun setPrice(isShow: Boolean){
         val it=Intent(requireActivity(),DataService::class.java)
         it.action="data_service"
-//        DaemonEnv.startServiceMayBind(DataService::class.java)
-//        requireActivity().startService(it)
        if(isShow){
            val notification = NotificationManagerCompat.from(requireContext())
            val isEnabled = notification.areNotificationsEnabled()
@@ -290,15 +302,21 @@ class DataFragment : BaseFragment() {
         )
         val c: Calendar = Calendar.getInstance()
         c.setTimeInMillis(System.currentTimeMillis())
-        if(c.get(Calendar.HOUR_OF_DAY)>hour||(c.get(Calendar.HOUR_OF_DAY)==hour&&c.get(Calendar.MINUTE)>min)){
-            c.set(Calendar.MINUTE, min)
-            c.set(Calendar.HOUR_OF_DAY, hour)
-            c.add(Calendar.SECOND, 86400)
-        }else{
-            c.set(Calendar.MINUTE, min)
-            c.set(Calendar.HOUR_OF_DAY, hour)
+        c.set(Calendar.MINUTE, min)
+        c.set(Calendar.HOUR_OF_DAY, hour)
+        c.set(Calendar.SECOND, 0)
+
+        var t=c.getTimeInMillis()-System.currentTimeMillis()
+        if(t<0){
+           t=t+86400*1000
         }
-        val t=c.getTimeInMillis()-System.currentTimeMillis()
+//        CalendarReminderUtils.addCalendarEvent(requireContext(),title,title,System.currentTimeMillis()+t,2);
+//        val request=OneTimeWorkRequest.Builder(MyWork::class.java)
+//            .setInitialDelay(t/1000, TimeUnit.SECONDS)
+//            .setInputData(workDataOf("id" to id,"title" to title))
+//            .build()
+//        WorkManager.getInstance(requireContext()).enqueue(request)
+//        Log.e("TAG",t.toString())
         jb.setMinimumLatency(t)
         jb.setOverrideDeadline(t+20*1000)
         jb.setTransientExtras(bundleOf("title" to title,"id" to id))
@@ -459,6 +477,8 @@ class DataFragment : BaseFragment() {
         }
 
     }
+
+
 
 
     override fun getBaseModel(): BaseModel {

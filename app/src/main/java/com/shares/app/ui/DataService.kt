@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProviders
@@ -51,7 +52,11 @@ class DataService:Service() {
                 isPlus=false
                 change=String.format("%.2f",rate)+"%"
             }
-            setPrice(it.current.price.toString(),change,isPlus)
+            if(it.current.price!=0.0f){
+                setPrice(it.current.price.toString(),change,isPlus)
+            }else{
+                stopForeground(true)
+            }
         }
 
     }
@@ -88,11 +93,10 @@ class DataService:Service() {
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
                 .setChannelId(id)
+                .setSmallIcon(R.drawable.notify)
                 .setStyle(Notification.DecoratedCustomViewStyle())
                 .setCustomContentView(remoteViews1)
                 .setCustomBigContentView(remoteViews)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.notify)
                 .build()
         }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val id = "channelId"
@@ -101,18 +105,17 @@ class DataService:Service() {
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
                 .setChannelId(id)
+                .setSmallIcon(R.drawable.notify)
                 .setCustomContentView(remoteViews)
                 .setCustomBigContentView(remoteViews)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.notify)
                 .build()
         } else {
             NotificationCompat.Builder(applicationContext)
-                .setContent(remoteViews)
-                .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.notify)
+                .setContent(remoteViews)
                 .build()
         }
+
         startForeground(1,notification)
     }
 
@@ -123,33 +126,9 @@ class DataService:Service() {
         startGetDataFull()
     }
 
+
     override fun onBind(p0: Intent?): IBinder? {
        return null
     }
-//
-//    override fun onBind(intent: Intent?, alwaysNull: Void?): IBinder? {
-//       return null
-//    }
-//
-//    override fun shouldStopService(intent: Intent?, flags: Int, startId: Int): Boolean {
-//       return false
-//    }
-//
-//    override fun startWork(intent: Intent?, flags: Int, startId: Int) {
-//        isRunning=true
-//        networkUtil.viewModelScope=CoroutineScope(Dispatchers.IO )
-//        startGetDataFull()
-//    }
-//
-//    override fun stopWork(intent: Intent?, flags: Int, startId: Int) {
-//
-//    }
-//
-//    override fun isWorkRunning(intent: Intent?, flags: Int, startId: Int): Boolean {
-//        return isRunning
-//    }
-//
-//    override fun onServiceKilled(rootIntent: Intent?) {
-//        TODO("Not yet implemented")
-//    }
+
 }

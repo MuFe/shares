@@ -16,7 +16,6 @@ import java.util.*
 
 class MyJobService:JobService() {
     override fun onStartJob(parameters: JobParameters): Boolean {
-        Log.e("TAG",System.currentTimeMillis().toString())
         job(parameters.transientExtras.getInt("id",1000),parameters.transientExtras.getString("title").orEmpty())
        return false
     }
@@ -29,32 +28,29 @@ class MyJobService:JobService() {
         var notification: Notification? = null
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val id = "channelId"
+            val idStr = "channelId"
             val name = "channelName"
-            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
+            val channel = NotificationChannel(idStr, name, NotificationManager.IMPORTANCE_LOW)
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
-                .setChannelId(id)
+                .setChannelId(idStr)
+                .setSmallIcon(R.drawable.notify)
                 .setStyle(Notification.DecoratedCustomViewStyle())
                 .setContentTitle(title)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.notify)
                 .build()
         }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val id = "channelId"
+            val idStr = "channelId"
             val name = "channelName"
-            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
+            val channel = NotificationChannel(idStr, name, NotificationManager.IMPORTANCE_LOW)
             manager!!.createNotificationChannel(channel)
             Notification.Builder(applicationContext)
-                .setChannelId(id)
-                .setStyle(Notification.BigTextStyle().bigText(title))
-                .setWhen(System.currentTimeMillis())
+                .setChannelId(idStr)
                 .setSmallIcon(R.drawable.notify)
+                .setStyle(Notification.BigTextStyle().bigText(title))
                 .build()
         } else {
             NotificationCompat.Builder(applicationContext)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(title))
-                .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.notify)
                 .build()
         }
@@ -70,9 +66,7 @@ class MyJobService:JobService() {
             )
         )
         jb.setMinimumLatency(86400*1000)
-        jb.setOverrideDeadline(86400*1000+60*1000)
-//        jb.setMinimumLatency(180*1000)
-//        jb.setOverrideDeadline(180*1000+60*1000)
+        jb.setOverrideDeadline(86400*1000+20*1000)
         jb.setTransientExtras(bundleOf("title" to title,"id" to id))
         val jobInfo = jb.build()
         val jobScheduler =context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler

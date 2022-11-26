@@ -53,6 +53,7 @@ class DataViewModel(
     val nowTime = MutableLiveData<String>()
     val nowLow = MutableLiveData<String>()
     val nowHigh = MutableLiveData<String>()
+    val isHide = MutableLiveData<Boolean>()
     private val mListData = MutableLiveData<List<KData>>()
     val listData: LiveData<List<KData>> = mListData
     private val mYearListData = MutableLiveData<List<KData>>()
@@ -63,10 +64,12 @@ class DataViewModel(
     val weekListData: LiveData<List<KData>> = mWeekListData
     private val mDayListData = MutableLiveData<List<KData>>()
     val dayListData: LiveData<List<KData>> = mDayListData
+    var temIndex=0
     init {
         haveVip.value=0
         selectIndex.value=2
         hide.value=mPreferenceUtil.isHide()
+        isHide.value=false
         check1.value=false
         check2.value=false
         check3.value=false
@@ -141,6 +144,17 @@ class DataViewModel(
                         change.value=String.format("%.2f",rate)+"%"
                     }
                     mEvent.postValue(ViewModelEvent.ChangeEvent)
+                }else{
+                    day.value=""
+                    time.value=""
+                    now.value=""
+                    today.value=""
+                    yesterday.value=""
+                    max.value=""
+                    min.value=""
+                    change.value=""
+                    isHide.value=true
+                    mEvent.postValue(ViewModelEvent.HideEvent)
                 }
             }
         }
@@ -335,7 +349,6 @@ class DataViewModel(
                 val last=list.last()
                 if((last.getTime()/1000).toDateStr(format).equals((v.getTime()/1000).toDateStr(format))){
                     last.setTime((v.getTime()/1000).toDateStr(format).toDateStr(format))
-                    Log.e("TAG",last.getTime().toString()+"+"+v.getTime().toString())
                     if(v.getHighPrice()>last.getHighPrice()){
                         last.setHighPrice(v.getHighPrice())
                     }
@@ -411,5 +424,6 @@ class DataViewModel(
         object ChangeEvent : ViewModelEvent()
         object ShowLevelEvent : ViewModelEvent()
         object FinishEvent : ViewModelEvent()
+        object HideEvent : ViewModelEvent()
     }
 }
