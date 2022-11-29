@@ -128,7 +128,7 @@ class DataViewModel(
                     day.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("yyyy-MM-dd")
                     time.value=(it.current.createTime.toDateStr("yyyy-MM-dd'T'HH:mm:ss")/1000).toDateStr("HH:mm")
                     now.value=it.current.price.toString()
-                    today.value=it.current.maxPrice.toString()
+                    today.value=it.current.open.toString()
                     yesterday.value=it.yesterday.price.toString()
                     max.value=it.current.maxPrice.toString()
                     min.value=it.current.minPrice.toString()
@@ -251,7 +251,7 @@ class DataViewModel(
         for(v in list){
             if(last==null||v.getTime()>startTime){
                 startTime+=diff
-                last=v
+                last= KData(v.getHighPrice(),v.getLowPrice(),v.getOpenPrice(),v.getClosePrice(),v.getVolume(),v.getTime(),v.getAvgPrice(),v.getFlag())
                 temp.add(last)
             }else{
                 if(v.getHighPrice()>last.getHighPrice()){
@@ -287,7 +287,7 @@ class DataViewModel(
             if(v.getTime()<=lastTime){
                 continue
             }
-            tempList.add(v)
+            tempList.add(KData(v.getHighPrice(),v.getLowPrice(),v.getOpenPrice(),v.getClosePrice(),v.getVolume(),v.getTime(),v.getAvgPrice(),v.getFlag()))
         }
         if(tempList.size>0){
             val last:KData=tempList.last()

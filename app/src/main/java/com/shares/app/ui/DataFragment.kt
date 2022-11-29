@@ -199,7 +199,8 @@ class DataFragment : BaseFragment() {
             initData(listData,lastTime)
         })
         mVm.selectIndex.observe(viewLifecycleOwner, { listData ->
-            stockChartConfig.kEntities.clear()
+            handler.removeMessages(1000)
+            mBinding.market.visibility=View.GONE
             initData(mVm.listData.value.orEmpty(),0L)
         })
     }
@@ -275,7 +276,6 @@ class DataFragment : BaseFragment() {
         }else{
             if(temp!=null&&temp.size>0){
                 val tempList=stockChartConfig.kEntities
-
                 val insert= mutableListOf<IKEntity>()
 
                 for(vv in temp){
